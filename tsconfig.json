@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    // 输出 .js.map 源映射文件
+    "sourceMap": false,
+    // 更严格的类型检查以获得更强的正确性。TS 推
+    "strict": true,
+    // 将 JSX 转换为 preserve
+    "jsx": "preserve",
+    // ESM 和 CJS 模块之间的互操作性。TS 推荐
+    "esModuleInterop": true,
+    // 使用 node 的模块解析算法，而不是传统的 TS 算法
+    "moduleResolution": "node",
+    // 支持 JSON 引入
+    "resolveJsonModule": true,
+    // 孤立模式（导入导出值要和类型区分）
+    "isolatedModules": true,
+    // 如果导入和文件系统的大小写不匹配，则报错。TS 推荐
+    "forceConsistentCasingInFileNames": true,
+    // 跳过检查 .d.ts 文件，特别是 node_modules 中的文件，可以显著提高性能。TS 推荐
+    "skipLibCheck": true,
+    // 在编译后，会使用 Object.defineProperty 为属性赋值，属性可配置 writable、enumerable、configurable
+    "useDefineForClassFields": true,
+    // 导入包时引入函数，实现 CommonJS 和 ES6 之间进行转换
+    "importHelpers": true,
+
+    // noUnused* 与 @typescript-eslint/no-unused-vars 重叠，如果重复可以禁用
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+
+    "types": ["vite/client"],
+
+    "noEmit": true,
+    "rootDir": "./src",
+    // "declarationDir": "./dist",
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["./src", "env.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

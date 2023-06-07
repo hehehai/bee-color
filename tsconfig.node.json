@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    // 启用项目编译
+    "composite": true,
+    // 指定模块系统为 ESNext
+    "module": "ESNext",
+    // 使用打包工具的模块解析算法
+    "moduleResolution": "bundler",
+    // 允许导入默认的合成模块
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["vite.config.ts", "histoire.config.ts"]
+}
