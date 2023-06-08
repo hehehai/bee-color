@@ -1,35 +1,25 @@
 <script lang="ts" setup>
 import Slider from "@/components/Slider.vue";
-import { HsbaColorType } from "@/interface";
+import { SliderHsbaColorType } from "@/interface";
 import { Color, defaultColor, generateColor } from "@/utils/color";
 import { ref, watch } from "vue";
 
-const hueColor = [
-  "rgb(255, 0, 0) 0%",
-  "rgb(255, 255, 0) 17%",
-  "rgb(0, 255, 0) 33%",
-  "rgb(0, 255, 255) 50%",
-  "rgb(0, 0, 255) 67%",
-  "rgb(255, 0, 255) 83%",
-  "rgb(255, 0, 0) 100%",
-];
-
 const colorValue = ref(defaultColor);
-const gradientColors = ref<string[]>([]);
 
-const handleChange = (color: Color, type?: HsbaColorType) => {
+const handleChange = (color: Color, type: SliderHsbaColorType) => {
   colorValue.value = color;
-  console.log("change", type);
+  console.log("change", color, type);
 };
 
-const handleChangeComplete = (type?: HsbaColorType) => {
-  console.log("change complete", type);
+const handleChangeComplete = (color: Color, type: SliderHsbaColorType) => {
+  console.log("change complete", color, type);
 };
 
+const alphaGradientColors = ref<string[]>([]);
 const changeAlphaColor = (color: Color) => {
   const rgb = generateColor(color.toRgbString());
   rgb.setAlpha(1);
-  gradientColors.value = ["rgba(255, 0, 4, 0) 0%", rgb.toRgbString()];
+  alphaGradientColors.value = ["rgba(255, 0, 4, 0) 0%", rgb.toRgbString()];
 };
 
 watch(colorValue, changeAlphaColor, {
@@ -43,10 +33,9 @@ watch(colorValue, changeAlphaColor, {
       <div class="box">
         <div class="row">
           <Slider
-            :gradientColors="hueColor"
-            :color="colorValue"
-            :value="`hsl(${colorValue.toHsb().h},100%, 50%)`"
-            @change="(color) => handleChange(color, 'hue')"
+            :value="colorValue"
+            :handler-color="`hsl(${colorValue.toHsb().h},100%, 50%)`"
+            @change="handleChange"
             @changeComplete="handleChangeComplete"
           />
         </div>
@@ -54,10 +43,10 @@ watch(colorValue, changeAlphaColor, {
         <div class="row">
           <Slider
             type="alpha"
-            :gradientColors="gradientColors"
-            :color="colorValue"
-            :value="colorValue.toRgbString()"
-            @change="(color) => handleChange(color, 'alpha')"
+            :gradientColors="alphaGradientColors"
+            :value="colorValue"
+            :handler-color="colorValue.toRgbString()"
+            @change="handleChange"
             @changeComplete="handleChangeComplete"
           />
         </div>

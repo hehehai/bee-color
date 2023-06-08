@@ -1,55 +1,63 @@
 <script lang="ts" setup>
-import { HsbaColorType } from "@/interface";
+import { SliderHsbaColorType } from "@/interface";
 import {
   Color,
   ColorPickerPrefixCls,
   calculateOffset,
   calculateColor,
+  defaultColor,
 } from "@/utils/color";
 import { unrefElement } from "@/utils/vue-utils";
-import { PropType, ref, toRefs } from "vue";
+import { ref, toRefs } from "vue";
 import { useColorDrag } from "@/hooks/useColorDrag";
 
 import Palette from "./Palette.vue";
 import Transform from "./Transform.vue";
 import Handler from "./Handler.vue";
 import Gradient from "./Gradient.vue";
+import { useColorState } from "@/hooks/useColorState";
 
 const prefixCls = ColorPickerPrefixCls;
-const props = defineProps({
-  color: {
-    type: Object as PropType<Color>,
-    required: true,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  gradientColors: {
-    type: Array as PropType<string[]>,
-    default: () => []
-  },
-  direction: {
-    type: String,
-  },
-  type: {
-    type: String as PropType<HsbaColorType>,
-    default: "hue",
-  },
-  value: {
-    type: String,
-  },
+
+interface SliderProps {
+  modelValue?: Color;
+  defaultValue?: Color;
+  disabled?: boolean;
+  gradientColors?: string[];
+  direction?: string;
+  type?: SliderHsbaColorType;
+  handlerColor?: string;
+}
+
+const props = withDefaults(defineProps<SliderProps>(), {
+  disabled: false,
+  type: "hue",
 });
 
-const emit = defineEmits(["change", "changeComplete"]);
+const emit = defineEmits<{
+  (e: "update:modelValue", color: Color): void;
+  (e: "change", color: Color, type: SliderHsbaColorType): void;
+  (e: "changeComplete", color: Color, type: SliderHsbaColorType): void;
+}>();
 
-const { color, value: _value, type, disabled } = toRefs(props);
+const { modelValue, defaultValue, type, disabled } = toRefs(props);
+
+const [colorValue, setColorValue] = useColorState(defaultColor, {
+  defaultValue,
+  modelValue,
+});
 
 const sliderRef = ref<HTMLDivElement | null>(null);
 const transformRef = ref<HTMLDivElement | null>(null);
 
+const handleChange = (color: Color, type: SliderHsbaColorType) => {
+  setColorValue(color);
+  emit("update:modelValue", color);
+  emit("change", color, type);
+};
+
 const [offset, onDragStartHandle] = useColorDrag({
-  color,
+  color: colorValue,
   targetRef: transformRef,
   containerRef: sliderRef,
   calculate: (containerEl) => {
@@ -57,7 +65,12 @@ const [offset, onDragStartHandle] = useColorDrag({
     if (!containerEl || !transformEl) {
       return;
     }
-    return calculateOffset(containerEl, transformEl, color.value, type.value);
+    return calculateOffset(
+      containerEl,
+      transformEl,
+      colorValue.value,
+      type.value
+    );
   },
   onDragChange: (offsetValue) => {
     const transformEl = unrefElement(transformRef);
@@ -65,19 +78,19 @@ const [offset, onDragStartHandle] = useColorDrag({
     if (!transformEl || !sliderEl) {
       return;
     }
-    emit(
-      "change",
+    handleChange(
       calculateColor({
         offset: offsetValue,
         targetEl: transformEl,
         containerEl: sliderEl,
-        color: color.value,
+        color: colorValue.value,
         type: type.value,
-      })
+      }),
+      type.value
     );
   },
   onDragChangeComplete() {
-    emit("changeComplete", type);
+    emit("changeComplete", colorValue.value, type.value);
   },
   direction: "x",
   disabledDrag: disabled,
@@ -93,10 +106,12 @@ const [offset, onDragStartHandle] = useColorDrag({
   >
     <Palette>
       <Transform ref="transformRef" :offset="offset">
-        <Handler size="small" :color="value"></Handler>
+        <Handler
+          size="small"
+          :color="handlerColor ?? colorValue.toRgbString()"
+        />
       </Transform>
-      <Gradient :colors="gradientColors" :direction="direction" :type="type">
-      </Gradient>
+      <Gradient :colors="gradientColors" :direction="direction" :type="type" />
     </Palette>
   </div>
 </template>

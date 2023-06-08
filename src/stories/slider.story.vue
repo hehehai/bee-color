@@ -1,26 +1,17 @@
 <script lang="ts" setup>
 import Slider from "@/components/Slider.vue";
-import { Color, defaultColor } from "@/utils/color";
+import { SliderHsbaColorType } from "@/interface";
+import { Color, generateColor } from "@/utils/color";
 import { ref } from "vue";
 
-const hueColor = [
-  "rgb(255, 0, 0) 0%",
-  "rgb(255, 255, 0) 17%",
-  "rgb(0, 255, 0) 33%",
-  "rgb(0, 255, 255) 50%",
-  "rgb(0, 0, 255) 67%",
-  "rgb(255, 0, 255) 83%",
-  "rgb(255, 0, 0) 100%",
-];
+const colorValue = ref(generateColor("rgb(0, 255, 0)"));
 
-const colorValue = ref(defaultColor);
-
-const handleChange = (color: Color) => {
-  colorValue.value = color;
+const handleChange = (color: Color, type: SliderHsbaColorType) => {
+  console.log("change", color, type);
 };
 
-const handleChangeComplete = () => {
-  console.log("change complete");
+const handleChangeComplete = (color: Color, type: SliderHsbaColorType) => {
+  console.log("change complete", color, type);
 };
 </script>
 
@@ -29,9 +20,8 @@ const handleChangeComplete = () => {
     <Variant title="Slider">
       <div class="box">
         <Slider
-          :gradientColors="hueColor"
-          :color="colorValue"
-          :value="`hsl(${colorValue.toHsb().h},100%, 50%)`"
+          v-model="colorValue"
+          :handler-color="`hsl(${colorValue.toHsb().h},100%,50%)`"
           @change="handleChange"
           @changeComplete="handleChangeComplete"
         />

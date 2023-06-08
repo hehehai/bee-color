@@ -5,12 +5,12 @@ import { ref } from "vue";
 
 const colorValue = ref(defaultColor);
 
-const handleChange = (color: Color) => {
-  colorValue.value = color;
+const handleChange = (color: Color, type: "saturation") => {
+  console.log("change", color, type);
 };
 
-const handleChangeComplete = () => {
-  console.log("change complete");
+const handleChangeComplete = (color: Color, type: "saturation") => {
+  console.log("change complete", color, type);
 };
 </script>
 
@@ -19,7 +19,7 @@ const handleChangeComplete = () => {
     <Variant title="Saturation">
       <div class="box">
         <Picker
-          :color="colorValue"
+          :value="colorValue"
           @change="handleChange"
           @changeComplete="handleChangeComplete"
         />

@@ -29,7 +29,9 @@ export type ColorGenInput<T = Color> =
   | HSBA
   | T;
 
-export type HsbaColorType = "hue" | "alpha";
+export type SliderHsbaColorType = "hue" | "alpha";
+
+export type HsbaColorType = "saturation" | SliderHsbaColorType;
 
 export type TransformOffset = {
   x: number;

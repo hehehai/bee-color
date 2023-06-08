@@ -8,39 +8,29 @@ import {
 import Picker from "./Picker.vue";
 import Slider from "./Slider.vue";
 import ColorBlock from "./ColorBlock.vue";
-import { PropType, computed, toRefs } from "vue";
-import { ColorGenInput, HsbaColorType } from "@/interface";
+import { computed, toRefs } from "vue";
+import { HsbaColorType } from "@/interface";
 import { useColorState } from "@/hooks/useColorState";
 
-const hueColor = [
-  "rgb(255, 0, 0) 0%",
-  "rgb(255, 255, 0) 17%",
-  "rgb(0, 255, 0) 33%",
-  "rgb(0, 255, 255) 50%",
-  "rgb(0, 0, 255) 67%",
-  "rgb(255, 0, 255) 83%",
-  "rgb(255, 0, 0) 100%",
-];
-
 const prefixCls = ColorPickerPrefixCls;
-const props = defineProps({
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  modelValue: {
-    type: [String, Number, Object] as PropType<ColorGenInput>,
-  },
-  defaultValue: {
-    type: [String, Number, Object] as PropType<ColorGenInput>,
-  },
-  disabledAlpha: {
-    type: Boolean,
-    default: false,
-  },
+
+interface ColorPickerProps {
+  modelValue?: Color;
+  defaultValue?: Color;
+  disabled?: boolean;
+  disabledAlpha?: boolean;
+}
+
+const props = withDefaults(defineProps<ColorPickerProps>(), {
+  disabled: false,
+  disabledAlpha: false,
 });
 
-const emit = defineEmits(["update:modelValue", "change", "changeComplete"]);
+const emit = defineEmits<{
+  (e: "update:modelValue", color: Color): void;
+  (e: "change", color: Color, type: HsbaColorType): void;
+  (e: "changeComplete", color: Color, type: HsbaColorType): void;
+}>();
 
 const { disabled, modelValue, defaultValue, disabledAlpha } = toRefs(props);
 
@@ -55,14 +45,14 @@ const alphaColor = computed(() => {
   return rgb.toRgbString();
 });
 
-const handleChange = (color: Color, type?: HsbaColorType) => {
+const handleChange = (color: Color, type: HsbaColorType) => {
   setColorValue(color);
   emit("update:modelValue", color);
   emit("change", color, type);
 };
 
-const handleChangeComplete = (type?: HsbaColorType) => {
-  emit("changeComplete", type);
+const handleChangeComplete = (color: Color, type: HsbaColorType) => {
+  emit("changeComplete", color, type);
 };
 </script>
 
@@ -88,10 +78,9 @@ const handleChangeComplete = (type?: HsbaColorType) => {
         ]"
       >
         <Slider
-          :gradientColors="hueColor"
-          :color="colorValue"
-          :value="`hsl(${colorValue.toHsb().h},100%, 50%)`"
-          @change="(color) => handleChange(color, 'hue')"
+          :value="colorValue"
+          :handler-color="`hsl(${colorValue.toHsb().h},100%, 50%)`"
+          @change="handleChange"
           @changeComplete="handleChangeComplete"
           :disabled="disabled"
         >
@@ -100,9 +89,9 @@ const handleChangeComplete = (type?: HsbaColorType) => {
           v-if="!disabledAlpha"
           type="alpha"
           :gradientColors="['rgba(255, 0, 4, 0) 0%', alphaColor]"
-          :color="colorValue"
-          :value="colorValue.toRgbString()"
-          @change="(color) => handleChange(color, 'alpha')"
+          :value="colorValue"
+          :handler-color="colorValue.toRgbString()"
+          @change="handleChange"
           @changeComplete="handleChangeComplete"
           :disabled="disabled"
         />

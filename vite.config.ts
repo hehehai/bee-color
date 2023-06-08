@@ -13,7 +13,7 @@ export default defineConfig(() => {
   ]
 
   // 判断环境，Histoire 下不打包 dts
-  if (process.env.HISTOIRE_ENV) {
+  if (!process.env.HISTOIRE_ENV) {
     plugins.push(dts({
       //  当为 true 时会基于 package.json 的 types 字段生成，或者 `${outputDir}/index.d.ts`
       insertTypesEntry: true,
@@ -37,10 +37,10 @@ export default defineConfig(() => {
         // 设置入口文件（包含我们导出组件的文件）。
         entry: resolve(__dirname, "src/index.ts"),
         // 库的名称。
-        name: "color-bee",
+        name: "bee-color",
         // 我们正在为 CJS 和 ESM 构建，使用一个函数来自动重命名文件。
         // 例如：my-component-library.esm.js
-        fileName: (format: string) => `${"color-bee"}.${format}.js`,
+        fileName: (format: string) => `${"bee-color"}.${format}.js`,
       },
       rollupOptions: {
         // Vue 是由父项目提供的，不要在我们的库中编译 Vue 源代码。

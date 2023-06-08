@@ -1,19 +1,20 @@
 <script lang="ts" setup>
 import Slider from "@/components/Slider.vue";
+import { SliderHsbaColorType } from "@/interface";
 import { Color, defaultColor, generateColor } from "@/utils/color";
 import { ref, watch } from "vue";
 
 const colorValue = ref(defaultColor);
+
+const handleChange = (color: Color, type: SliderHsbaColorType) => {
+  console.log("change", color, type);
+};
+
+const handleChangeComplete = (color: Color, type: SliderHsbaColorType) => {
+  console.log("change complete", color, type);
+};
+
 const gradientColors = ref<string[]>([]);
-
-const handleChange = (color: Color) => {
-  colorValue.value = color;
-};
-
-const handleChangeComplete = () => {
-  console.log("change complete");
-};
-
 const changeAlphaColor = (color: Color) => {
   const rgb = generateColor(color.toRgbString());
   rgb.setAlpha(1);
@@ -32,8 +33,8 @@ watch(colorValue, changeAlphaColor, {
         <Slider
           type="alpha"
           :gradientColors="gradientColors"
-          :color="colorValue"
-          :value="colorValue.toRgbString()"
+          :value="colorValue"
+          :handler-color="colorValue.toRgbString()"
           @change="handleChange"
           @changeComplete="handleChangeComplete"
         />

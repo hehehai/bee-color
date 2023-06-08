@@ -1,6 +1,6 @@
 {
-  "name": "@hehehai/color-bee",
-  "version": "1.0.0",
+  "name": "@hehehai/bee-color",
+  "version": "0.1.0",
   "description": "vue 颜色选择器",
   "keywords": [
     "vue3",
@@ -8,20 +8,27 @@
   ],
   "author": "guanwei",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hehehai/bee-color.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hehehai/bee-color/issues"
+  },
   "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/color-bee.umd.js",
-      "import": "./dist/color-bee.es.js"
+      "require": "./dist/bee-color.umd.js",
+      "import": "./dist/bee-color.es.js"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
     }
   },
-  "main": "dist/color-bee.umd.js",
-  "module": "dist/color-bee.es.js",
+  "main": "dist/bee-color.umd.js",
+  "module": "dist/bee-color.es.js",
   "sideEffects": false,
   "files": [
     "dist"
@@ -32,7 +39,10 @@
     "build": "vue-tsc && vite build",
     "story:dev": "histoire dev",
     "story:build": "cross-env HISTOIRE_ENV=true histoire build",
-    "story:preview": "histoire HISTOIRE_ENV=true preview"
+    "story:preview": "histoire HISTOIRE_ENV=true preview",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build",
+    "release": "bumpp --commit --push --tag && npm publish"
   },
   "peerDependencies": {
     "vue": "^3.2.47"
@@ -64,7 +74,6 @@
     "vue-tsc": "^1.4.2"
   },
   "dependencies": {
-    "@ctrl/tinycolor": "^3.6.0",
-    "colord": "^2.9.3"
+    "@ctrl/tinycolor": "^3.6.0"
   }
 }

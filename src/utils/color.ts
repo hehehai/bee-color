@@ -35,7 +35,7 @@ export class Color extends TinyColor {
     const lightness = getRoundNumber(hsb.b * 100);
     const hue = getRoundNumber(hsb.h);
     const alpha = hsb.a;
-    console.log(alpha)
+    console.log(alpha);
     const hsbString = `hsb(${hue}, ${saturation}%, ${lightness}%)`;
     const hsbaString = `hsba(${hue}, ${saturation}%, ${lightness}%, ${alpha.toFixed(
       alpha === 0 ? 0 : 2
@@ -69,6 +69,18 @@ export const generateColor = (color: ColorGenInput): Color => {
 };
 
 export const defaultColor = generateColor("#1677ff");
+
+export const defaultHueColors = [
+  "rgb(255, 0, 0) 0%",
+  "rgb(255, 255, 0) 17%",
+  "rgb(0, 255, 0) 33%",
+  "rgb(0, 255, 255) 50%",
+  "rgb(0, 0, 255) 67%",
+  "rgb(255, 0, 255) 83%",
+  "rgb(255, 0, 0) 100%",
+];
+
+export const defaultAlphaStartColor = "rgba(255, 0, 4, 0) 0%";
 
 export const calculateColor = (props: {
   offset: TransformOffset;
