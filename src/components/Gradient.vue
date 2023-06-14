@@ -1,39 +1,40 @@
 <script lang="ts" setup>
-import { HsbaColorType } from "@/interface";
+import type { HsbaColorType } from '@/interface'
 import {
   ColorPickerPrefixCls,
   defaultHueColors,
-  generateColor,
-} from "@/utils/color";
-import { computed } from "vue";
+  generateColor
+} from '@/utils/color'
+import { computed } from 'vue'
 
-const prefixCls = ColorPickerPrefixCls;
+const prefixCls = ColorPickerPrefixCls
 
 interface GradientProps {
-  colors?: string[];
-  direction?: string;
-  type?: HsbaColorType;
+  colors?: string[],
+  direction?: string,
+  type?: HsbaColorType
 }
 
 const props = withDefaults(defineProps<GradientProps>(), {
-  direction: "to right",
-  type: "hue",
-});
+  colors: undefined,
+  direction: 'to right',
+  type: 'hue'
+})
 
 const gradientColors = computed(() => {
   const mergeColors =
-    props.colors ?? (props.type === "hue" ? defaultHueColors : []);
+    props.colors ?? (props.type === 'hue' ? defaultHueColors : [])
 
   return mergeColors
     .map((color, idx) => {
-      const result = generateColor(color);
-      if (props.type === "alpha" && idx === mergeColors.length - 1) {
-        result.setAlpha(1);
+      const result = generateColor(color)
+      if (props.type === 'alpha' && idx === mergeColors.length - 1) {
+        result.setAlpha(1)
       }
-      return result.toRgbString();
+      return result.toRgbString()
     })
-    .join(",");
-});
+    .join(',')
+})
 </script>
 
 <template>

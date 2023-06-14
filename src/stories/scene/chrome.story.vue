@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import ColorPickerVue from '@/components/ColorPicker.vue';
+import ColorPickerVue from '@/components/ColorPicker.vue'
 </script>
 
 <template>
-  <Story
-    title="颜色选择器"
-  >
+  <Story title="颜色选择器">
     <Variant title="Slider">
       <div class="box">
         <ColorPickerVue />

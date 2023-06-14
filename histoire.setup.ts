@@ -1,1 +1,1 @@
-import "./src/assets/index.less"
+import './src/assets/index.less'

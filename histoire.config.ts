@@ -24,11 +24,7 @@ export default defineConfig({
       },
       {
         title: '场景',
-        include: (file) => /\/components\//.test(file.path)
-      },
-      {
-        title: 'Others',
-        include: () => true
+        include: (file) => /\/scene\//.test(file.path)
       }
     ]
   },

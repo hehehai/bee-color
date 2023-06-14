@@ -1,0 +1,5 @@
+.histoire
+dist
+node_modules
+.eslintrc.cjs
+*.json

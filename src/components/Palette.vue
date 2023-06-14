@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ColorPickerPrefixCls } from "@/utils/color";
+import { ColorPickerPrefixCls } from '@/utils/color'
 
-const prefixCls = ColorPickerPrefixCls;
+const prefixCls = ColorPickerPrefixCls
 </script>
 
 <template>

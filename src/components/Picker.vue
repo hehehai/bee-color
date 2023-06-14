@@ -1,70 +1,72 @@
 <script lang="ts" setup>
+import type { Color } from '@/utils/color'
 import {
-  Color,
   ColorPickerPrefixCls,
   calculateOffset,
   calculateColor,
-  defaultColor,
-} from "@/utils/color";
-import { unrefElement } from "@/utils/vue-utils";
-import { useColorDrag } from "@/hooks/useColorDrag";
+  defaultColor
+} from '@/utils/color'
+import { unrefElement } from '@/utils/vue-utils'
+import { useColorDrag } from '@/hooks/useColorDrag'
 
-import Palette from "./Palette.vue";
-import Transform from "./Transform.vue";
-import Handler from "./Handler.vue";
-import { ref, toRefs } from "vue";
-import { useColorState } from "@/hooks/useColorState";
+import Palette from './Palette.vue'
+import Transform from './Transform.vue'
+import Handler from './Handler.vue'
+import { ref, toRefs } from 'vue'
+import { useColorState } from '@/hooks/useColorState'
 
-const prefixCls = ColorPickerPrefixCls;
+const prefixCls = ColorPickerPrefixCls
 
 interface PickerProps {
-  modelValue?: Color;
-  defaultValue?: Color;
-  disabled?: boolean;
+  modelValue?: Color,
+  defaultValue?: Color,
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<PickerProps>(), {
-  disabled: false,
-});
+  modelValue: undefined,
+  defaultValue: undefined,
+  disabled: false
+})
 
 const emit = defineEmits<{
-  (e: "update:modelValue", color: Color): void;
-  (e: "change", color: Color, type: "saturation"): void;
-  (e: "changeComplete", color: Color, type: "saturation"): void;
-}>();
+  (e: 'update:modelValue', color: Color): void,
+  (e: 'change', color: Color, type: 'saturation'): void,
+  (e: 'changeComplete', color: Color, type: 'saturation'): void
+}>()
 
-const { modelValue, defaultValue, disabled } = toRefs(props);
+const { modelValue, defaultValue, disabled } = toRefs(props)
 
 const [colorValue, setColorValue] = useColorState(defaultColor, {
   defaultValue,
-  modelValue,
-});
+  modelValue
+})
 
-const pickerRef = ref<HTMLDivElement | null>(null);
-const transformRef = ref<HTMLDivElement | null>(null);
+const pickerRef = ref<HTMLDivElement | null>(null)
+const transformRef = ref<HTMLDivElement | null>(null)
 
 const handleChange = (color: Color) => {
-  setColorValue(color);
-  emit("update:modelValue", color);
-  emit("change", color, "saturation");
-};
+  setColorValue(color)
+  emit('update:modelValue', color)
+  emit('change', color, 'saturation')
+}
 
 const [offset, onDragStartHandle] = useColorDrag({
   color: colorValue,
   containerRef: pickerRef,
   targetRef: transformRef,
   calculate: (containerEl) => {
-    const transformEl = unrefElement(transformRef);
+    const transformEl = unrefElement(transformRef)
     if (!containerEl || !transformEl) {
-      return;
+      return
     }
-    return calculateOffset(containerEl, transformEl, colorValue.value);
+    return calculateOffset(containerEl, transformEl, colorValue.value)
   },
   onDragChange: (offsetValue) => {
-    const transformEl = unrefElement(transformRef);
-    const pickerEl = unrefElement(pickerRef);
+    const transformEl = unrefElement(transformRef)
+    const pickerEl = unrefElement(pickerRef)
     if (!transformEl || !pickerEl) {
-      return;
+      return
     }
 
     handleChange(
@@ -72,15 +74,15 @@ const [offset, onDragStartHandle] = useColorDrag({
         offset: offsetValue,
         targetEl: transformEl,
         containerEl: pickerEl,
-        color: colorValue.value,
+        color: colorValue.value
       })
-    );
+    )
   },
   onDragChangeComplete() {
-    emit("changeComplete", colorValue.value, "saturation");
+    emit('changeComplete', colorValue.value, 'saturation')
   },
-  disabledDrag: disabled,
-});
+  disabledDrag: disabled
+})
 </script>
 
 <template>
@@ -92,7 +94,7 @@ const [offset, onDragStartHandle] = useColorDrag({
   >
     <Palette>
       <Transform ref="transformRef" :offset="offset">
-        <Handler :color="colorValue.toRgbString()"></Handler>
+        <Handler :color="colorValue.toRgbString()" />
       </Transform>
       <div
         :class="`${prefixCls}-saturation`"

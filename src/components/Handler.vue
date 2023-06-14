@@ -1,26 +1,22 @@
 <script lang="ts" setup>
-import { ColorPickerPrefixCls } from "@/utils/color";
+import { ColorPickerPrefixCls } from '@/utils/color'
 
-const prefixCls = ColorPickerPrefixCls;
-
-type HandlerSize = "default" | "small";
+const prefixCls = ColorPickerPrefixCls
 
 interface HandlerProps {
-  size?: HandlerSize;
-  color?: string;
+  color?: string
 }
 
 withDefaults(defineProps<HandlerProps>(), {
-  size: "default",
-  color: "transparent",
-});
+  size: 'default',
+  color: 'transparent'
+})
 </script>
 
 <template>
   <div
     :class="{
-      [`${prefixCls}-handler`]: true,
-      [`${prefixCls}-handler-sm`]: size === 'small',
+      [`${prefixCls}-handler`]: true
     }"
     :style="{
       backgroundColor: color,

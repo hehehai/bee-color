@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import { ColorGenInput } from "@/interface";
-import { ColorPickerPrefixCls, generateColor } from "@/utils/color";
-import { computed } from "vue";
+import type { ColorGenInput } from '@/interface'
+import { ColorPickerPrefixCls, generateColor } from '@/utils/color'
+import { computed } from 'vue'
 
-const prefixCls = ColorPickerPrefixCls;
+const prefixCls = ColorPickerPrefixCls
 
 interface ColorBlockProps {
-  color?: ColorGenInput;
+  color?: ColorGenInput
 }
 
 const props = withDefaults(defineProps<ColorBlockProps>(), {
-  color: "transparent",
-});
+  color: 'transparent'
+})
 
 const blockStyle = computed(() => ({
-  background: generateColor(props.color).toRgbString(),
-}));
+  background: generateColor(props.color).toRgbString()
+}))
 </script>
 
 <template>

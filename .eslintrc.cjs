@@ -1,108 +1,111 @@
 module.exports = {
-  files: ['src/**/*.{js,ts,tsx,vue}', "docs/**/*.{vue}"],
   root: true,
   env: {
-    node: true
+    node: true,
   },
-  parser: 'vue-eslint-parser',
+  parser: "vue-eslint-parser",
   extends: [
-    'plugin:vue/vue3-essential',
-    'plugin:vue/vue3-strongly-recommended',
-    'plugin:vue/vue3-recommended',
-    '@vue/standard',
-    '@vue/typescript/recommended'
+    "plugin:vue/vue3-essential",
+    "plugin:vue/vue3-strongly-recommended",
+    "plugin:vue/vue3-recommended",
+    "@vue/standard",
+    "@vue/typescript/recommended",
   ],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: "latest",
   },
   rules: {
-    'no-console':
-      process.env.NODE_ENV === 'production'
+    "no-console":
+      process.env.NODE_ENV === "production"
         ? [
-            'error',
+            "error",
             {
-              allow: ['warn', 'error']
-            }
+              allow: ["warn", "error"],
+            },
           ]
-        : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-return-assign': 'off',
-    'space-before-function-paren': [
-      'error',
+        : "off",
+    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+    "no-return-assign": "off",
+    "func-call-spacing": "off",
+    "space-before-function-paren": [
+      "error",
       {
-        anonymous: 'always',
-        named: 'never',
-        asyncArrow: 'always'
-      }
+        anonymous: "always",
+        named: "never",
+        asyncArrow: "always",
+      },
     ],
 
     // typescript
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/ban-ts-comment': 'warn',
-    '@typescript-eslint/no-empty-interface': 'warn',
-    '@typescript-eslint/consistent-type-imports': 'warn',
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/strict-boolean-expressions': 'off',
-    '@typescript-eslint/member-delimiter-style': [
-      'error',
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        varsIgnorePattern: "^_",
+      },
+    ],
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/no-empty-interface": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
       {
         multiline: {
-          delimiter: 'comma',
-          requireLast: false
+          delimiter: "comma",
+          requireLast: false,
         },
         singleline: {
-          delimiter: 'comma',
-          requireLast: false
-        }
-      }
+          delimiter: "comma",
+          requireLast: false,
+        },
+      },
     ],
-    '@typescript-eslint/no-inferrable-types': 'error',
-    '@typescript-eslint/no-this-alias': [
-      'error',
+    "@typescript-eslint/no-inferrable-types": "error",
+    "@typescript-eslint/no-this-alias": [
+      "error",
       {
-        allowDestructuring: true
-      }
+        allowDestructuring: true,
+      },
     ],
-    '@typescript-eslint/no-unnecessary-condition': 'off',
-    '@typescript-eslint/space-before-function-paren': [
-      'error',
+    "@typescript-eslint/no-unnecessary-condition": "off",
+    "@typescript-eslint/space-before-function-paren": [
+      "error",
       {
-        anonymous: 'always',
-        named: 'never',
-        asyncArrow: 'always'
-      }
+        anonymous: "always",
+        named: "never",
+        asyncArrow: "always",
+      },
     ],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/consistent-type-assertions': 'off',
-    '@typescript-eslint/consistent-type-imports': [
-      'error',
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
       {
-        prefer: 'type-imports',
-        disallowTypeAnnotations: false
-      }
+        prefer: "type-imports",
+        disallowTypeAnnotations: false,
+      },
     ],
-    'vue/max-attributes-per-line': [
-      'warn',
+    "vue/max-attributes-per-line": [
+      "warn",
       {
         singleline: 3,
-        multiline: 1
-      }
+        multiline: 1,
+      },
     ],
-    'vue/html-self-closing': [
-      'error',
+    "vue/html-self-closing": [
+      "error",
       {
         html: {
-          void: 'always',
-          normal: 'never',
-          component: 'never'
+          normal: "never",
+          void: "always",
         },
-        svg: 'always',
-        math: 'always'
-      }
+        svg: "always",
+        math: "always",
+      },
     ],
-    'vue/comment-directive': 'off',
-    'vue/multi-word-component-names': 'off'
-  }
-}
+    "vue/comment-directive": "off",
+    "vue/multi-word-component-names": "off",
+  },
+};

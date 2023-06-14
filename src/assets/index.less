@@ -1,46 +1,57 @@
-@ColorPickerPrefixCls: rc-color-picker;
-@font-size-base: 12px;
-@vertical-space: 12px;
-@inner-border-radius: 4px;
-@outer-border-radius: 8px;
-@default-handler-size: 16px;
-@sm-handler-size: 12px;
-@handler-border-size: 2px;
-@shadow-2-down:0px 3px 6px -4px rgba(0, 0, 0, 0.12),0px 6px 16px 0px rgba(0, 0, 0, 0.08),0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+:root {
+  --bee-color-font-size-base: 12px;
+  --bee-color-vertical-space: 12px;
+  --bee-color-inner-border-radius: 4px;
+  --bee-color-outer-border-radius: 8px;
+  --bee-color-slider-height: 8px;
+  --bee-color-handler-width-size: 12px;
+  --bee-color-handler-height-size: 12px;
+  --bee-color-handler-border-size: 2px;
+  --bee-color-shadow-2-down: 0px 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
 
-.@{ColorPickerPrefixCls} {
+@bee-color-prefix-cls: bee-color;
+
+.@{bee-color-prefix-cls} {
   position: absolute;
   z-index: 1;
   display: block;
   width: max-content;
   min-width: 258px;
   visibility: visible;
+
   &-hidden {
     display: none;
   }
+
   &-panel {
     display: flex;
     flex-direction: column;
     width: 258px;
-    padding: @vertical-space;
+    padding: var(--bee-color-vertical-space);
     background-color: #fff;
-    border-radius: @outer-border-radius;
-    box-shadow: @shadow-2-down;
+    border-radius: var(--bee-color-outer-border-radius);
+    box-shadow: var(--bee-color-shadow-2-down);
+
     &-disabled {
       cursor: not-allowed;
     }
   }
+
   &-select {
-    .@{ColorPickerPrefixCls}-palette {
+    .@{bee-color-prefix-cls}-palette {
       min-height: 160px;
       overflow: hidden;
-      border-radius: @inner-border-radius;
-      & > .@{ColorPickerPrefixCls}-gradient {
+      border-radius: var(--bee-color-inner-border-radius);
+
+      & > .@{bee-color-prefix-cls}-gradient {
         border-top-left-radius: 5px;
       }
     }
+
     width: 100%;
-    margin-bottom: @vertical-space;
+    margin-bottom: var(--bee-color-vertical-space);
   }
 
   &-saturation {
@@ -51,28 +62,27 @@
 
   &-handler {
     box-sizing: border-box;
-    width: @default-handler-size;
-    height: @default-handler-size;
-    border: @handler-border-size solid #fff;
-    border-radius: 50%;
+    width: var(--bee-color-handler-width-size);
+    height: var(--bee-color-handler-height-size);
+    border: var(--bee-color-handler-border-size) solid #fff;
+    border-radius: var(--bee-color-handler-radius, 50%);
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.06);
-  }
-  &-handler-sm {
-    width: @sm-handler-size;
-    height: @sm-handler-size;
   }
 
   &-slider {
     width: 100%;
-    margin-bottom: @vertical-space;
-    .@{ColorPickerPrefixCls}-palette {
-      height: 8px;
+    margin-bottom: var(--bee-color-vertical-space);
+
+    .@{bee-color-prefix-cls}-palette {
+      height: var(--bee-color-slider-height);
     }
-    .@{ColorPickerPrefixCls}-gradient {
-      border-radius: @inner-border-radius;
+
+    .@{bee-color-prefix-cls}-gradient {
+      border-radius: var(--bee-color-inner-border-radius);
     }
+
     &-alpha {
-      background: url('./alpha.svg');
+      background: url("./alpha.svg");
     }
   }
 
@@ -82,25 +92,30 @@
     height: 28px;
     margin-left: 8px;
     overflow: hidden;
-    background-image: url('./alpha.svg');
-    border-radius: @inner-border-radius;
+    background-image: url("./alpha.svg");
+    border-radius: var(--bee-color-inner-border-radius);
+
     &-inner {
       box-sizing: border-box;
       width: 100%;
       height: 100%;
       border: 1px solid rgba(0, 0, 0, 0.06);
-      border-radius: @inner-border-radius;
+      border-radius: var(--bee-color-inner-border-radius);
     }
   }
+
   &-slider-container {
     display: flex;
-    .@{ColorPickerPrefixCls}-slider-group {
+
+    .@{bee-color-prefix-cls}-slider-group {
       flex: 1;
+
       &-disabled-alpha {
         display: flex;
         align-items: center;
-        .@{ColorPickerPrefixCls}-slider{
-            margin-bottom: 0;
+
+        .@{bee-color-prefix-cls}-slider {
+          margin-bottom: 0;
         }
       }
     }
