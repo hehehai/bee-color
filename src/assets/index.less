@@ -1,11 +1,15 @@
 :root {
+  --bee-color-panel-width: 258px;
+  --bee-color-panel-bg: #fff;
   --bee-color-font-size-base: 12px;
   --bee-color-vertical-space: 12px;
   --bee-color-inner-border-radius: 4px;
   --bee-color-outer-border-radius: 8px;
   --bee-color-slider-height: 8px;
-  --bee-color-handler-width-size: 12px;
-  --bee-color-handler-height-size: 12px;
+  --bee-color-handler-width-size: 16px;
+  --bee-color-handler-height-size: 16px;
+  --bee-color-handler-width-small-size: 12px;
+  --bee-color-handler-height-small-size: 12px;
   --bee-color-handler-border-size: 2px;
   --bee-color-shadow-2-down: 0px 3px 6px -4px rgba(0, 0, 0, 0.12),
     0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
@@ -14,23 +18,12 @@
 @bee-color-prefix-cls: bee-color;
 
 .@{bee-color-prefix-cls} {
-  position: absolute;
-  z-index: 1;
-  display: block;
-  width: max-content;
-  min-width: 258px;
-  visibility: visible;
-
-  &-hidden {
-    display: none;
-  }
-
   &-panel {
     display: flex;
     flex-direction: column;
-    width: 258px;
+    width: var(--bee-color-panel-width);
     padding: var(--bee-color-vertical-space);
-    background-color: #fff;
+    background-color: var(--bee-color-panel-bg);
     border-radius: var(--bee-color-outer-border-radius);
     box-shadow: var(--bee-color-shadow-2-down);
 
@@ -57,6 +50,7 @@
   &-saturation {
     position: absolute;
     border-radius: inherit;
+    box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.25);
     inset: 0px;
   }
 
@@ -69,9 +63,15 @@
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.06);
   }
 
+  &-handler-sm {
+    width: var(--bee-color-handler-width-small-size);
+    height: var(--bee-color-handler-height-small-size);
+  }
+
   &-slider {
     width: 100%;
     margin-bottom: var(--bee-color-vertical-space);
+    border-radius: var(--bee-color-inner-border-radius);
 
     .@{bee-color-prefix-cls}-palette {
       height: var(--bee-color-slider-height);
@@ -79,20 +79,27 @@
 
     .@{bee-color-prefix-cls}-gradient {
       border-radius: var(--bee-color-inner-border-radius);
+      box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.25);
     }
 
     &-alpha {
-      background: url("./alpha.svg");
+      background-image: conic-gradient(
+        rgba(0, 0, 0, 0.06) 0 25%,
+        transparent 0 50%,
+        rgba(0, 0, 0, 0.06) 0 75%,
+        transparent 0
+      );
+      background-size: 8px 8px;
     }
   }
 
   &-color-block {
     position: relative;
-    width: 28px;
-    height: 28px;
-    margin-left: 8px;
-    overflow: hidden;
-    background-image: url("./alpha.svg");
+    width: var(--bee-color-block-width, 28px);
+    height: var(--bee-color-block-height, 28px);
+    box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.25);
+    background-image: conic-gradient(rgba(0, 0, 0, 0.06) 0 25%, transparent 0 50%, rgba(0, 0, 0, 0.06) 0 75%, transparent 0);
+    background-size: 50% 50%;
     border-radius: var(--bee-color-inner-border-radius);
 
     &-inner {
@@ -118,6 +125,10 @@
           margin-bottom: 0;
         }
       }
+    }
+
+    .@{bee-color-prefix-cls}-slider-group + .@{bee-color-prefix-cls}-color-block {
+      margin-left: var(--bee-color-vertical-space);
     }
   }
 }
