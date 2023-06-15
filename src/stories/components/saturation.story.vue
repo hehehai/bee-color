@@ -22,7 +22,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
     <Variant title="饱和度">
       <div class="box">
         <Picker
-          :value="colorValue"
+          :model-value="colorValue"
           @change="handleChange"
           @change-complete="handleChangeComplete"
         />

@@ -35,7 +35,7 @@ watch(colorValue, changeAlphaColor, {
       <div class="box">
         <div class="row">
           <Slider
-            :value="colorValue"
+            :model-value="colorValue"
             :handler-color="`hsl(${colorValue.toHsb().h},100%, 50%)`"
             @change="handleChange"
             @change-complete="handleChangeComplete"
@@ -46,7 +46,7 @@ watch(colorValue, changeAlphaColor, {
           <Slider
             type="alpha"
             :gradient-colors="alphaGradientColors"
-            :value="colorValue"
+            :model-value="colorValue"
             :handler-color="colorValue.toRgbString()"
             @change="handleChange"
             @change-complete="handleChangeComplete"

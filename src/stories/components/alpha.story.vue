@@ -35,7 +35,7 @@ watch(colorValue, changeAlphaColor, {
         <Slider
           type="alpha"
           :gradient-colors="gradientColors"
-          :value="colorValue"
+          :model-value="colorValue"
           :handler-color="colorValue.toRgbString()"
           @change="handleChange"
           @change-complete="handleChangeComplete"
