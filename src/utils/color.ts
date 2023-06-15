@@ -8,7 +8,7 @@ import type {
   TransformOffset
 } from '@/interface'
 
-const getRoundNumber = (value: number) => Math.round(Number(value || 0))
+export const getRoundNumber = (value: number) => Math.round(Number(value || 0))
 
 const convertHsb2Hsv = (color: ColorGenInput): ColorInput => {
   if (color && typeof color === 'object' && 'h' in color && 'b' in color) {
@@ -35,7 +35,6 @@ export class Color extends TinyColor {
     const lightness = getRoundNumber(hsb.b * 100)
     const hue = getRoundNumber(hsb.h)
     const alpha = hsb.a
-    console.log(alpha)
     const hsbString = `hsb(${hue}, ${saturation}%, ${lightness}%)`
     const hsbaString = `hsba(${hue}, ${saturation}%, ${lightness}%, ${alpha.toFixed(
       alpha === 0 ? 0 : 2
@@ -65,6 +64,17 @@ export const generateColor = (color: ColorGenInput): Color => {
   }
   return new Color(color)
 }
+
+export const getAlphaColor = (color: Color) => getRoundNumber(color.toHsb().a * 100)
+
+export const toHexFormat = (value?: string, alpha?: boolean) =>
+  value?.replace(/[^\w/]/gi, '').slice(0, alpha ? 8 : 6) || ''
+
+const hexReg = /(^#[\da-f]{6}$)|(^#[\da-f]{8}$)/i
+
+export const isHexString = (hex?: string) => hexReg.test(`#${hex}`)
+
+export const getHex = (value?: string, alpha?: boolean) => (value ? toHexFormat(value, alpha) : '')
 
 export const ColorPickerPrefixCls = 'bee-color'
 
@@ -135,7 +145,6 @@ export const calculateOffset = (
     targetEl.getBoundingClientRect()
   const centerOffsetX = targetWidth / 2
   const centerOffsetY = targetHeight / 2
-  console.log({ centerOffsetX, centerOffsetY })
   const hsb = color.toHsb()
 
   // Exclusion of boundary cases

@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<ColorBlockProps>(), {
 })
 
 const blockStyle = computed(() => ({
-  background: generateColor(props.color).toRgbString()
+  background: typeof props.color === 'string' ? props.color : generateColor(props.color).toRgbString()
 }))
 </script>
 

@@ -3,34 +3,35 @@ import { onBeforeUnmount, ref, watch } from 'vue'
 import type { Color } from '@/utils/color'
 import { type MaybeElementRef, unrefElement } from '@/utils/vue-utils'
 import type { TransformOffset } from '@/interface'
+import { useResizeObserver } from './useResizeObserver'
 
 type EventType = MouseEvent | TouchEvent;
 
 type EventHandle = (e: EventType) => void;
 
 export interface useColorDragProps {
-    color?: Ref<Color | undefined>, // 颜色
-    offset?: Ref<TransformOffset>, // 偏移量
-    containerRef: MaybeElementRef, // 容器元素
-    targetRef: MaybeElementRef, // 目标元素
-    direction?: 'x' | 'y', // 方向
-    onDragChange?: (offset: TransformOffset) => void, // 拖拽时的回调函数
-    onDragChangeComplete?: () => void, // 拖拽结束时的回调函数
-    calculate?: (containerRef: HTMLDivElement) => TransformOffset | undefined, // 计算偏移量的函数
-    /** Disabled drag */
-    disabledDrag?: Ref<boolean> // 是否禁用拖拽
+  color?: Ref<Color | undefined>, // 颜色
+  offset?: Ref<TransformOffset>, // 偏移量
+  containerRef: MaybeElementRef, // 容器元素
+  targetRef: MaybeElementRef, // 目标元素
+  direction?: 'x' | 'y', // 方向
+  onDragChange?: (offset: TransformOffset) => void, // 拖拽时的回调函数
+  onDragChangeComplete?: () => void, // 拖拽结束时的回调函数
+  calculate?: (containerRef: HTMLDivElement) => TransformOffset | undefined, // 计算偏移量的函数
+  /** Disabled drag */
+  disabledDrag?: Ref<boolean> // 是否禁用拖拽
 }
 
 function getPosition(e: EventType) {
   const obj = 'touches' in e ? e.touches[0] : e
   const scrollXOffset =
-        document.documentElement.scrollLeft ||
-        document.body.scrollLeft ||
-        window.pageXOffset
+    document.documentElement.scrollLeft ||
+    document.body.scrollLeft ||
+    window.pageXOffset
   const scrollYOffset =
-        document.documentElement.scrollTop ||
-        document.body.scrollTop ||
-        window.pageYOffset
+    document.documentElement.scrollTop ||
+    document.body.scrollTop ||
+    window.pageYOffset
   return { pageX: obj.pageX - scrollXOffset, pageY: obj.pageY - scrollYOffset }
 }
 
@@ -53,17 +54,22 @@ export function useColorDrag(props: useColorDragProps) {
 
   let dragFlag = false
 
+  const rectify = () => {
+    const refEl = unrefElement(containerRef)
+    if (!dragFlag && refEl) {
+      const calcOffset = calculate?.(refEl)
+      if (calcOffset) {
+        setOffsetValue(calcOffset)
+      }
+    }
+  }
+
+  // FIX: 动画缩放元素内，初始化元素大小不正确
+  useResizeObserver([containerRef, targetRef], rectify)
+
   watch(
     [containerRef, color],
-    () => {
-      const refEl = unrefElement(containerRef)
-      if (!dragFlag && refEl) {
-        const calcOffset = calculate?.(refEl)
-        if (calcOffset) {
-          setOffsetValue(calcOffset)
-        }
-      }
-    },
+    rectify,
     {
       immediate: true
     }
@@ -83,14 +89,14 @@ export function useColorDrag(props: useColorDragProps) {
       height
     } = containerEl.getBoundingClientRect()
     const { width: targetWidth, height: targetHeight } =
-            targetEl.getBoundingClientRect()
+      targetEl.getBoundingClientRect()
 
     const centerOffsetX = targetWidth / 2
     const centerOffsetY = targetHeight / 2
 
     const offsetX = Math.max(0, Math.min(pageX - rectX, width)) - centerOffsetX
     const offsetY =
-            Math.max(0, Math.min(pageY - rectY, height)) - centerOffsetY
+      Math.max(0, Math.min(pageY - rectY, height)) - centerOffsetY
 
     const calcOffset = {
       x: offsetX,

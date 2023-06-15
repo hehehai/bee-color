@@ -94,14 +94,14 @@ const [offset, onDragStartHandle] = useColorDrag({
   >
     <Palette>
       <Transform ref="transformRef" :offset="offset">
-        <Handler :color="colorValue.toRgbString()" />
+        <Handler color="transparent" />
       </Transform>
       <div
         :class="`${prefixCls}-saturation`"
         :style="{
-          backgroundColor: `hsl(${colorValue.toHsb().h},100%, 50%)`,
+          backgroundColor: `hsl(${colorValue.toHsb().h}, 100%, 50%)`,
           backgroundImage:
-            'linear-gradient(0deg, #000, transparent),linear-gradient(90deg, #fff, hsla(0, 0%, 100%, 0))',
+            'linear-gradient(0deg, rgb(0, 0, 0), transparent), linear-gradient(90deg, rgb(255, 255, 255), rgba(255, 255, 255, 0))',
         }"
       ></div>
     </Palette>

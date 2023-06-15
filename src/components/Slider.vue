@@ -116,6 +116,7 @@ const [offset, onDragStartHandle] = useColorDrag(dragProps)
       <Transform ref="transformRef" :offset="offset">
         <Handler
           :color="handlerColor ?? colorValue.toRgbString()"
+          size="small"
         />
       </Transform>
       <Gradient :colors="gradientColors" :direction="direction" :type="type" />

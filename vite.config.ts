@@ -5,7 +5,6 @@ import Vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 
 export default defineConfig(() => {
-  console.log()
   // 如果我们的 .vue 文件有样式，它将被编译为一个单独的 `.css` 文件，存储在 /dist 目录下。
   const plugins = [
     Vue(),

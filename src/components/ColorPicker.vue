@@ -66,7 +66,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
     ]"
   >
     <Picker
-      :color="colorValue"
+      :model-value="colorValue"
       :disabled="disabled"
       @change="handleChange"
       @change-complete="handleChangeComplete"
@@ -79,7 +79,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
         ]"
       >
         <Slider
-          :value="colorValue"
+          :model-value="colorValue"
           :handler-color="`hsl(${colorValue.toHsb().h},100%, 50%)`"
           :disabled="disabled"
           @change="handleChange"
@@ -89,7 +89,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
           v-if="!disabledAlpha"
           type="alpha"
           :gradient-colors="['rgba(255, 0, 4, 0) 0%', alphaColor]"
-          :value="colorValue"
+          :model-value="colorValue"
           :handler-color="colorValue.toRgbString()"
           :disabled="disabled"
           @change="handleChange"
