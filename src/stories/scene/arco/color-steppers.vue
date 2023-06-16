@@ -18,8 +18,8 @@ const props = withDefaults(defineProps<StepperProps>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', step?: number): void,
-  (e: 'change', step?: number): void
+  (e: 'update:modelValue', step: number): void,
+  (e: 'change', step: number): void
 }>()
 
 const { modelValue, defaultValue } = toRefs(props)
@@ -30,9 +30,11 @@ const [_value, setValue] = useModelState(undefined, {
 })
 
 const handleChange = (step?: number) => {
-  setValue(step)
-  emit('update:modelValue', step)
-  emit('change', step)
+  if (step !== undefined) {
+    setValue(step)
+    emit('update:modelValue', step)
+    emit('change', step)
+  }
 }
 
 </script>

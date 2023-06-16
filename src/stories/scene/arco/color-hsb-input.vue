@@ -52,6 +52,7 @@ const handleHsbChange = (step: number, type: keyof HSB) => {
       :max="100"
       :model-value="hsbValue.toHsb().s * 100"
       :formatter="(step: number) => `${getRoundNumber(step || 0)}%`"
+      :parser="(value: string) => value.replace(/%/g, '')"
       @change="(step: number) => handleHsbChange(Number(step), 's')"
     />
     <ColorSteppers
@@ -59,6 +60,7 @@ const handleHsbChange = (step: number, type: keyof HSB) => {
       :max="100"
       :model-value="hsbValue.toHsb().b * 100"
       :formatter="(step: number) => `${getRoundNumber(step || 0)}%`"
+      :parser="(value: string) => value.replace(/%/g, '')"
       @change="(step: number) => handleHsbChange(Number(step), 'b')"
     />
   </div>
