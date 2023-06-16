@@ -51,8 +51,8 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
 }
 
 .custom {
-  --bee-color-handler-width-size: 16px;
-  --bee-color-handler-height-size: 28px;
+  --bee-color-handler-width-small-size: 16px;
+  --bee-color-handler-height-small-size: 28px;
   --bee-color-handler-radius: 6px;
 
   --bee-color-slider-height: 20px;
