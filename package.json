@@ -1,6 +1,6 @@
 {
   "name": "@dooit/bee-color",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "vue 颜色选择器",
   "keywords": [
     "vue3",
