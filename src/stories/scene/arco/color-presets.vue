@@ -130,17 +130,18 @@ const handlePresetChange = (color: Color) => {
   }
 
   &-block {
-    --bee-color-block-width: 22.2px;
-    --bee-color-block-height: 22.2px;
+    --bee-color-block-width: 19.8px;
+    --bee-color-block-height: 19.8px;
 
     position: relative;
     cursor: pointer;
 
     &::before {
+      box-sizing: border-box;
       content: "";
       pointer-events: none;
-      width: 24px;
-      height: 24px;
+      width: 23.8px;
+      height: 23.8px;
       position: absolute;
       top: -2px;
       inset-inline-start: -2px;
@@ -157,10 +158,10 @@ const handlePresetChange = (color: Color) => {
       box-sizing: border-box;
       position: absolute;
       top: 50%;
-      inset-inline-start: 25.2%;
+      inset-inline-start: 23.2%;
       display: table;
-      width: 8px;
-      height: 12px;
+      width: 7.2px;
+      height: 11px;
       border: 2px solid #fff;
       border-top: 0;
       border-inline-start: 0;

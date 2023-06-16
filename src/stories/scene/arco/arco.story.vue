@@ -116,5 +116,7 @@ const presets: PresetsItem[] = [
 
 .a-color-picker {
   --bee-color-panel-width: 280px;
+
+  box-sizing: border-box;
 }
 </style>

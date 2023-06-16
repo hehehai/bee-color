@@ -120,6 +120,10 @@ const handleColorChange = (color?: Color) => {
   &.arco-select-view-single {
     padding-left: 0;
     padding-right: 0;
+
+    .arco-select-view-suffix {
+      padding-left: 10px;
+    }
   }
 }
 
