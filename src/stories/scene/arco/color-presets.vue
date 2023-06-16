@@ -2,7 +2,7 @@
 import { type Color, Color as RcColor, generateColor, defaultColor } from '@/utils/color'
 import type { PresetsItem } from './interface'
 import { computed, ref, toRefs } from 'vue'
-import { Collapse, CollapsePanel } from 'ant-design-vue'
+import { Collapse, CollapseItem } from '@arco-design/web-vue'
 import { ColorBlock } from '@/components'
 import { useColorState } from '@/hooks/useColorState'
 
@@ -63,56 +63,58 @@ const handlePresetChange = (color: Color) => {
 </script>
 
 <template>
-  <div class="antd-color-presets">
-    <Collapse v-model:active-key="activePresetKeys" ghost>
-      <CollapsePanel v-for="preset in presets" :key="`panel-${preset.label}`">
+  <div class="a-color-presets">
+    <Collapse v-model:active-key="activePresetKeys" :bordered="false">
+      <CollapseItem v-for="preset in presets" :key="`panel-${preset.label}`">
         <template #header>
-          <div class="antd-color-presets-label">
+          <div class="a-color-presets-label">
             {{ preset.label }}
           </div>
         </template>
-        <div v-if="preset.colors?.length" class="antd-color-presets-items">
-          <template
-            v-for="colorItem in preset.colors"
-            :key="`preset-${colorItem.toRgbString()}`"
-          >
+        <div v-if="preset.colors?.length" class="a-color-presets-items">
+          <template v-for="colorItem in preset.colors" :key="`preset-${colorItem.toRgbString()}`">
             <ColorBlock
-              :class="[`antd-color-presets-block`, {
-                [`antd-color-presets-block-checked`]:
+              :class="[`a-color-presets-block`, {
+                [`a-color-presets-block-checked`]:
                   colorItem.toRgbString() === colorValue?.toRgbString(),
-                [`antd-color-presets-block-bright`]: isBright(colorItem, colorBgElevated),
+                [`a-color-presets-block-bright`]: isBright(colorItem, colorBgElevated),
               }]"
               :color="colorItem.toRgbString()"
               @click="handlePresetChange(colorItem)"
             />
           </template>
         </div>
-        <span v-else class="antd-color-presets-empty">{{ emptyText }}</span>
-      </CollapsePanel>
+        <span v-else class="a-color-presets-empty">{{ emptyText }}</span>
+      </CollapseItem>
     </Collapse>
   </div>
 </template>
 
 <style lang="less">
-.antd-color-presets {
-  .ant-collapse-item>.ant-collapse-header {
-    padding: 0;
+.a-color-presets {
+  .arco-collapse-item-header {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
 
-    .ant-collapse-expand-icon {
-      height: 20px;
-      color: rgba(0, 0, 0, 0.25);
-      padding-inline-end: 4px;
+  .arco-collapse-item-header-left {
+    padding-right: 12px;
+    padding-left: 22px;
+    border-color: transparent;
+  }
+
+  .arco-collapse-item {
+    border-bottom: none;
+
+    .arco-collapse-item-icon-hover {
+      left: 0px;
     }
   }
 
-  .ant-collapse {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box {
-    padding: 8px 0;
+  .arco-collapse-item-content {
+    padding-left: 2px;
+    padding-right: 2px;
+    background: transparent;
   }
 
   &-label {
@@ -128,10 +130,11 @@ const handlePresetChange = (color: Color) => {
   }
 
   &-block {
+    --bee-color-block-width: 22.2px;
+    --bee-color-block-height: 22.2px;
+
     position: relative;
     cursor: pointer;
-    width: 20px;
-    height: 20px;
 
     &::before {
       content: "";
@@ -154,10 +157,10 @@ const handlePresetChange = (color: Color) => {
       box-sizing: border-box;
       position: absolute;
       top: 50%;
-      inset-inline-start: 22.5%;
+      inset-inline-start: 25.2%;
       display: table;
-      width: 7.2px;
-      height: 11px;
+      width: 8px;
+      height: 12px;
       border: 2px solid #fff;
       border-top: 0;
       border-inline-start: 0;
@@ -176,7 +179,7 @@ const handlePresetChange = (color: Color) => {
       transition: transform 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
     }
 
-    &.antd-color-presets-block-bright {
+    &.a-color-presets-block-bright {
       &::after {
         border-color: rgba(0, 0, 0, 0.45);
       }

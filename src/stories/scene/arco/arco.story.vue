@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { Popover, Divider } from 'ant-design-vue'
+import { Trigger, Divider } from '@arco-design/web-vue'
 
-import 'ant-design-vue/dist/antd.css'
+import '@arco-design/web-vue/dist/arco.css'
 import { ref } from 'vue'
 import type { PresetsItem } from './interface'
 import { ColorBlock, ColorPicker } from '@/components'
@@ -10,7 +10,7 @@ import ColorInput from './color-input.vue'
 import ColorPresets from './color-presets.vue'
 
 // see https://ant.design/components/color-picker-cn
-// ant design primary color #3876F6
+// arco primary color #3876F6
 const color = ref(generateColor('#3876F6'))
 
 const presets: PresetsItem[] = [
@@ -58,23 +58,26 @@ const presets: PresetsItem[] = [
 </script>
 
 <template>
-  <Story title="Ant Design">
+  <Story title="Arco">
     <Variant title="Slider">
       <div class="box">
-        <Popover overlay-class-name="antd-color-picker-pop" trigger="click">
+        <Trigger
+          trigger="click"
+          :popup-translate="[0, 8]"
+        >
           <template #content>
-            <ColorPicker v-model="color" class="antd-color-picker">
+            <ColorPicker v-model="color" class="a-color-picker">
               <ColorInput v-model="color" />
               <template v-if="presets">
-                <Divider class="antd-color-divider" />
+                <Divider class="a-color-divider" />
                 <ColorPresets v-model="color" :presets="presets" />
               </template>
             </ColorPicker>
           </template>
-          <div class="antd-color-block-trigger">
+          <div class="a-color-block-trigger">
             <ColorBlock :color="color.toRgbString()" />
           </div>
-        </Popover>
+        </Trigger>
       </div>
     </Variant>
   </story>
@@ -89,13 +92,13 @@ const presets: PresetsItem[] = [
 }
 
 // 以下为自定义样式
-.antd-color-block-trigger {
+.a-color-block-trigger {
   --bee-color-block-width: 24px;
   --bee-color-block-height: 24px;
 
   cursor: pointer;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 6px;
   border: 1px solid #d9d9d9;
   cursor: pointer;
@@ -111,24 +114,7 @@ const presets: PresetsItem[] = [
   }
 }
 
-.antd-color-picker {
+.a-color-picker {
   --bee-color-panel-width: 280px;
-}
-
-.antd-color-divider {
-  margin: 16px 0 8px;
-}
-
-// 弹出框，样式覆盖
-.antd-color-picker-pop {
-  .ant-popover-inner {
-    background-color: transparent;
-    border-radius: 0px;
-    box-shadow: none;
-  }
-
-  .ant-popover-inner-content {
-    padding: 0;
-  }
 }
 </style>
