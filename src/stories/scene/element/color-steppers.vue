@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useModelState } from '@/hooks/useModelState'
-import { InputNumber } from 'ant-design-vue'
+import { ElInputNumber } from 'element-plus'
 import { toRefs } from 'vue'
 
 interface StepperProps {
@@ -29,22 +29,26 @@ const [_value, setValue] = useModelState(undefined, {
   modelValue
 })
 
-const handleChange = (step: any) => {
-  setValue(step)
-  emit('update:modelValue', step)
-  emit('change', step)
+const handleChange = (step?: number) => {
+  if (step !== undefined) {
+    setValue(step)
+    emit('update:modelValue', step)
+    emit('change', step)
+  }
 }
 
 </script>
 
 <template>
-  <InputNumber
+  <ElInputNumber
     class="my-color-steppers"
-    :value="_value"
+    controls-position="right"
+    v-bind="$attrs"
+    :model-value="_value"
     size="small"
     :min="min"
     :max="max"
-    v-bind="$attrs"
+    :controls="false"
     @change="handleChange"
   />
 </template>

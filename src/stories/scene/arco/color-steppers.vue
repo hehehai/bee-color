@@ -41,7 +41,7 @@ const handleChange = (step?: number) => {
 
 <template>
   <InputNumber
-    class="a-color-steppers"
+    class="my-color-steppers"
     v-bind="$attrs"
     :model-value="_value"
     size="mini"

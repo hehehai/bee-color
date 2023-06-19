@@ -39,7 +39,7 @@ const handleHsbChange = (step: number, type: keyof HSB) => {
 </script>
 
 <template>
-  <div class="antd-color-hsb-input">
+  <div class="my-color-hsb-input">
     <ColorSteppers
       :min="0"
       :max="360"

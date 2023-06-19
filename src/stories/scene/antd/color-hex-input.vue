@@ -45,7 +45,7 @@ const handleHexChange = (e: ChangeEvent) => {
 
 <template>
   <Input
-    class="antd-color-hex-input"
+    class="my-color-hex-input"
     prefix="#"
     size="small"
     :value="hexValue?.toUpperCase()"

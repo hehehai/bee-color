@@ -66,15 +66,15 @@ const presets: PresetsItem[] = [
           :popup-translate="[0, 8]"
         >
           <template #content>
-            <ColorPicker v-model="color" class="a-color-picker">
+            <ColorPicker v-model="color" class="my-color-picker">
               <ColorInput v-model="color" />
               <template v-if="presets">
-                <Divider class="a-color-divider" />
+                <Divider class="my-color-divider" />
                 <ColorPresets v-model="color" :presets="presets" />
               </template>
             </ColorPicker>
           </template>
-          <div class="a-color-block-trigger">
+          <div class="my-color-block-trigger">
             <ColorBlock :color="color.toRgbString()" />
           </div>
         </Trigger>
@@ -92,7 +92,7 @@ const presets: PresetsItem[] = [
 }
 
 // 以下为自定义样式
-.a-color-block-trigger {
+.my-color-block-trigger {
   --bee-color-block-width: 24px;
   --bee-color-block-height: 24px;
 
@@ -114,7 +114,7 @@ const presets: PresetsItem[] = [
   }
 }
 
-.a-color-picker {
+.my-color-picker {
   --bee-color-panel-width: 280px;
 
   box-sizing: border-box;

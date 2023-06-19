@@ -67,19 +67,19 @@ const handleColorChange = (color?: Color) => {
 </script>
 
 <template>
-  <div class="a-color-container">
+  <div class="my-color-container">
     <Select
-      class="a-color-select"
+      class="my-color-select"
       :model-value="_format"
       size="small"
       :bordered="false"
       :trigger-props="{
-        contentClass: 'a-color-select-pop'
+        contentClass: 'my-color-select-pop'
       }"
       :options="colorSelectOptions"
       @change="handleFormatChange"
     />
-    <div class="a-color-input">
+    <div class="my-color-input">
       <component :is="formatInput" :model-value="colorValue" @change="handleColorChange" />
     </div>
     <ColorAlphaInput :model-value="colorValue" @change="handleColorChange" />
@@ -88,7 +88,7 @@ const handleColorChange = (color?: Color) => {
 
 <style lang="less">
 // a 为自定义样式，arc 为覆盖样式
-.a-color-container {
+.my-color-container {
   --input-font-size: 13px;
   --input-line-height: 1.7;
   --input-border-radius: 4px;
@@ -96,7 +96,7 @@ const handleColorChange = (color?: Color) => {
   display: flex;
 
   // 数值计步器
-  .a-color-steppers.arco-input-wrapper {
+  .my-color-steppers.arco-input-wrapper {
     border-radius: var(--input-border-radius);
     padding-left: 6px;
     padding-right: 6px;
@@ -113,7 +113,7 @@ const handleColorChange = (color?: Color) => {
 }
 
 // 颜色格式选择器
-.a-color-select {
+.my-color-select {
   margin-inline-end: 8px;
   width: auto;
 
@@ -127,7 +127,7 @@ const handleColorChange = (color?: Color) => {
   }
 }
 
-.a-color-select-pop {
+.my-color-select-pop {
   min-width: 60px;
 
   .arco-select-dropdown .arco-select-option {
@@ -136,24 +136,24 @@ const handleColorChange = (color?: Color) => {
 }
 
 // 颜色输入
-.a-color-input {
+.my-color-input {
   gap: 4px;
   align-items: center;
   flex: 1;
   width: 0;
 
-  .a-color-hsb-input,
-  .a-color-rgb-input {
+  .my-color-hsb-input,
+  .my-color-rgb-input {
     display: flex;
     gap: 4px;
     align-items: center;
   }
 
-  .a-color-steppers {
+  .my-color-steppers {
     flex: 1;
   }
 
-  .a-color-hex-input.arco-input-wrapper {
+  .my-color-hex-input.arco-input-wrapper {
     border-radius: var(--input-border-radius);
 
     .arco-input.arco-input-size-small {
@@ -166,7 +166,7 @@ const handleColorChange = (color?: Color) => {
 }
 
 // 透明度输入
-.a-color-alpha-input {
+.my-color-alpha-input {
   flex: 0 0 55px;
   margin-inline-start: 4px;
 }

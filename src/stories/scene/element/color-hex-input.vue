@@ -2,7 +2,7 @@
 import type { Color } from '@/utils/color'
 import { generateColor, isHexString, toHexFormat } from '@/utils/color'
 import { ref, toRefs, watch } from 'vue'
-import { Input } from '@arco-design/web-vue'
+import { ElInput } from 'element-plus'
 
 interface HexInputProps {
   modelValue?: Color
@@ -42,7 +42,7 @@ const handleHexChange = (originValue: string) => {
 </script>
 
 <template>
-  <Input
+  <ElInput
     class="my-color-hex-input"
     size="small"
     :model-value="hexValue?.toUpperCase()"
@@ -51,5 +51,5 @@ const handleHexChange = (originValue: string) => {
     <template #prefix>
       <span>#</span>
     </template>
-  </Input>
+  </ElInput>
 </template>

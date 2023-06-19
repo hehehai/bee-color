@@ -60,6 +60,7 @@
     "ant-design-vue": "^3.2.20",
     "bumpp": "^9.1.1",
     "cross-env": "^7.0.3",
+    "element-plus": "^2.3.6",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",

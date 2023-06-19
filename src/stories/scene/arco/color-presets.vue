@@ -63,35 +63,35 @@ const handlePresetChange = (color: Color) => {
 </script>
 
 <template>
-  <div class="a-color-presets">
+  <div class="my-color-presets">
     <Collapse v-model:active-key="activePresetKeys" :bordered="false">
       <CollapseItem v-for="preset in presets" :key="`panel-${preset.label}`">
         <template #header>
-          <div class="a-color-presets-label">
+          <div class="my-color-presets-label">
             {{ preset.label }}
           </div>
         </template>
-        <div v-if="preset.colors?.length" class="a-color-presets-items">
+        <div v-if="preset.colors?.length" class="my-color-presets-items">
           <template v-for="colorItem in preset.colors" :key="`preset-${colorItem.toRgbString()}`">
             <ColorBlock
-              :class="[`a-color-presets-block`, {
-                [`a-color-presets-block-checked`]:
+              :class="[`my-color-presets-block`, {
+                [`my-color-presets-block-checked`]:
                   colorItem.toRgbString() === colorValue?.toRgbString(),
-                [`a-color-presets-block-bright`]: isBright(colorItem, colorBgElevated),
+                [`my-color-presets-block-bright`]: isBright(colorItem, colorBgElevated),
               }]"
               :color="colorItem.toRgbString()"
               @click="handlePresetChange(colorItem)"
             />
           </template>
         </div>
-        <span v-else class="a-color-presets-empty">{{ emptyText }}</span>
+        <span v-else class="my-color-presets-empty">{{ emptyText }}</span>
       </CollapseItem>
     </Collapse>
   </div>
 </template>
 
 <style lang="less">
-.a-color-presets {
+.my-color-presets {
   .arco-collapse-item-header {
     padding-top: 2px;
     padding-bottom: 2px;
@@ -180,7 +180,7 @@ const handlePresetChange = (color: Color) => {
       transition: transform 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
     }
 
-    &.a-color-presets-block-bright {
+    &.my-color-presets-block-bright {
       &::after {
         border-color: rgba(0, 0, 0, 0.45);
       }

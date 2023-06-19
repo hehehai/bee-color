@@ -39,7 +39,7 @@ const handleRgbChange = (step: number | null, type: keyof RGB) => {
 </script>
 
 <template>
-  <div class="a-color-rgb-input">
+  <div class="my-color-rgb-input">
     <ColorSteppers
       :min="0"
       :max="255"

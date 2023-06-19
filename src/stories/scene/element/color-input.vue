@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Select } from 'ant-design-vue'
+import { ElSelect, ElOption } from 'element-plus'
 import { ColorFormat, colorSelectOptions } from './constants'
 import type { Color } from '@/utils/color'
 import { defaultColor } from '@/utils/color'
@@ -68,16 +68,21 @@ const handleColorChange = (color?: Color) => {
 
 <template>
   <div class="my-color-container">
-    <Select
+    <ElSelect
       class="my-color-select"
-      :value="_format"
+      :model-value="_format"
       size="small"
-      :options="colorSelectOptions"
-      :bordered="false"
-      :dropdown-match-select-width="60"
-      :get-popup-container="triggerNode => triggerNode.parentNode"
+      :teleported="false"
+      popper-class="my-color-select-pop"
       @change="handleFormatChange"
-    />
+    >
+      <ElOption
+        v-for="item in colorSelectOptions"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+    </ElSelect>
     <div class="my-color-input">
       <component :is="formatInput" :model-value="colorValue" @change="handleColorChange" />
     </div>
@@ -86,70 +91,32 @@ const handleColorChange = (color?: Color) => {
 </template>
 
 <style lang="less">
-// antd 为自定义样式，ant 为覆盖样式
 .my-color-container {
   --input-font-size: 13px;
   --input-line-height: 1.7;
   --input-border-radius: 4px;
 
   display: flex;
-
-  // 数值计步器
-  .my-color-steppers.ant-input-number {
-    font-size: var(--input-font-size);
-    line-height: var(--input-line-height);
-    border-radius: var(--input-border-radius);
-
-    .ant-input-number-input {
-      padding-inline-start: 4px;
-      padding-inline-end: 0;
-    }
-
-    .ant-input-number-handler-wrap {
-      width: 16px;
-
-      .ant-input-number-handler-up-inner, .ant-input-number-handler-down-inner {
-        right: 2px;
-      }
-    }
-  }
 }
 
 // 颜色格式选择器
 .my-color-select {
-  margin-inline-end: 8px;
-  width: auto;
+  width: 60px;
+  margin-inline-end: 6px;
 
-  &.ant-select-single {
+  .el-input--small {
+    --el-input-height: 26px;
+    font-size: 12px;
+  }
+}
 
-    .ant-select-selector {
-      padding: 0 !important;
-      border: 0;
-    }
+.my-color-select-pop {
+  min-width: 60px;
 
-    .ant-select-arrow {
-      inset-inline-end: 0;
-    }
-
-    .ant-select-selection-item {
-      padding-inline-end: 16px;
-      font-size: var(--input-font-size);
-      padding-right: 18px !important;
-      line-height: 24px !important;
-    }
-
-    .ant-select-item-option-content {
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .ant-select-dropdown {
-      border-radius: 6px;
-
-      .ant-select-item {
-        min-height: auto;
-      }
-    }
+  .el-select-dropdown__item {
+    padding: 0 16px;
+    height: 26px;
+    line-height: 26px;
   }
 }
 
@@ -169,27 +136,37 @@ const handleColorChange = (color?: Color) => {
 
   .my-color-steppers {
     flex: 1;
-  }
 
-  .my-color-hex-input.ant-input-affix-wrapper {
-    flex: 1;
-    padding: 0 8px;
-    border-radius: var(--input-border-radius);
-
-    .ant-input {
-      font-size: var(--input-font-size);
-      line-height: var(--input-line-height);
+    &.el-input-number.is-controls-right .el-input__wrapper {
+      padding-left: 6px;
+      padding-right: 23px;
     }
 
-    .ant-input-prefix {
-      color: rgba(0, 0, 0, 0.25)
+    &.el-input-number--small .el-input-number__decrease,
+    &.el-input-number--small .el-input-number__increase {
+      width: 16px;
+    }
+
+    .el-input--small .el-input__inner {
+      --el-input-inner-height: 24px;
+    }
+  }
+
+  .my-color-hex-input.arco-input-wrapper {
+    border-radius: var(--input-border-radius);
+
+    .arco-input.arco-input-size-small {
+      font-size: var(--input-font-size);
+      line-height: var(--input-line-height);
+      padding-top: 1px;
+      padding-bottom: 1px;
     }
   }
 }
 
 // 透明度输入
 .my-color-alpha-input {
-  flex: 0 0 44px;
+  flex: 0 0 50px;
   margin-inline-start: 4px;
 }
 </style>

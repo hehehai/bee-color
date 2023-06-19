@@ -2,7 +2,7 @@
 import { type Color, Color as RcColor, generateColor, defaultColor } from '@/utils/color'
 import type { PresetsItem } from './interface'
 import { computed, ref, toRefs } from 'vue'
-import { Collapse, CollapsePanel } from 'ant-design-vue'
+import { ElCollapse, ElCollapseItem } from 'element-plus'
 import { ColorBlock } from '@/components'
 import { useColorState } from '@/hooks/useColorState'
 
@@ -64,18 +64,19 @@ const handlePresetChange = (color: Color) => {
 
 <template>
   <div class="my-color-presets">
-    <Collapse v-model:active-key="activePresetKeys" ghost>
-      <CollapsePanel v-for="preset in presets" :key="`panel-${preset.label}`">
-        <template #header>
+    <ElCollapse v-model="activePresetKeys" :bordered="false">
+      <ElCollapseItem
+        v-for="preset in presets"
+        :key="`panel-${preset.label}`"
+        :name="`panel-${preset.label}`"
+      >
+        <template #title>
           <div class="my-color-presets-label">
             {{ preset.label }}
           </div>
         </template>
         <div v-if="preset.colors?.length" class="my-color-presets-items">
-          <template
-            v-for="colorItem in preset.colors"
-            :key="`preset-${colorItem.toRgbString()}`"
-          >
+          <template v-for="colorItem in preset.colors" :key="`preset-${colorItem.toRgbString()}`">
             <ColorBlock
               :class="[`my-color-presets-block`, {
                 [`my-color-presets-block-checked`]:
@@ -88,31 +89,28 @@ const handlePresetChange = (color: Color) => {
           </template>
         </div>
         <span v-else class="my-color-presets-empty">{{ emptyText }}</span>
-      </CollapsePanel>
-    </Collapse>
+      </ElCollapseItem>
+    </ElCollapse>
   </div>
 </template>
 
 <style lang="less">
 .my-color-presets {
-  .ant-collapse-item>.ant-collapse-header {
-    padding: 0;
-
-    .ant-collapse-expand-icon {
-      height: 20px;
-      color: rgba(0, 0, 0, 0.25);
-      padding-inline-end: 4px;
-    }
+  .el-collapse {
+    border-top: none;
   }
 
-  .ant-collapse {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  .arco-collapse-item__header {
+    height: var(--el-collapse-header-height);
+    line-height: var(--el-collapse-header-height);
   }
 
-  .ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box {
-    padding: 8px 0;
+  .el-collapse-item__wrap {
+    border-bottom: none;
+  }
+
+  .el-collapse-item__content {
+    padding-bottom: 0;
   }
 
   &-label {
@@ -122,22 +120,25 @@ const handlePresetChange = (color: Color) => {
   }
 
   &-items {
+    padding: 2px 0;
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
   }
 
   &-block {
+    --bee-color-block-width: 19.8px;
+    --bee-color-block-height: 19.8px;
+
     position: relative;
     cursor: pointer;
-    width: 20px;
-    height: 20px;
 
     &::before {
+      box-sizing: border-box;
       content: "";
       pointer-events: none;
-      width: 24px;
-      height: 24px;
+      width: 23.8px;
+      height: 23.8px;
       position: absolute;
       top: -2px;
       inset-inline-start: -2px;
@@ -154,7 +155,7 @@ const handlePresetChange = (color: Color) => {
       box-sizing: border-box;
       position: absolute;
       top: 50%;
-      inset-inline-start: 22.5%;
+      inset-inline-start: 23.2%;
       display: table;
       width: 7.2px;
       height: 11px;

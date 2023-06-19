@@ -39,7 +39,7 @@ const handleAlphaChange = (step: number) => {
 
 <template>
   <ColorSteppers
-    class="a-color-alpha-input"
+    class="my-color-alpha-input"
     :min="0"
     :max="255"
     :formatter="(step: number) => `${step}%`"
