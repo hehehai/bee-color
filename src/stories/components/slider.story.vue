@@ -18,7 +18,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
 </script>
 
 <template>
-  <Story title="色相选择">
+  <Story title="色相选择" icon="heroicons:cube-20-solid">
     <Variant title="普通">
       <div class="box">
         <Slider

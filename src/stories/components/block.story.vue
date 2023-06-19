@@ -10,6 +10,7 @@ const color = ref(generateColor('blue'))
 <template>
   <Story
     title="颜色块"
+    icon="heroicons:cube-20-solid"
   >
     <Variant title="色块">
       <div class="box">

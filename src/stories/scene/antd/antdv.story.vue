@@ -58,7 +58,7 @@ const presets: PresetsItem[] = [
 </script>
 
 <template>
-  <Story title="Ant Design">
+  <Story title="Ant Design" icon="heroicons:sparkles-solid">
     <Variant title="Slider">
       <div class="box">
         <Popover overlay-class-name="my-color-picker-pop" trigger="click">

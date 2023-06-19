@@ -18,7 +18,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
 </script>
 
 <template>
-  <Story title="饱和度选择">
+  <Story title="饱和度选择" icon="heroicons:cube-20-solid">
     <Variant title="饱和度">
       <div class="box">
         <Picker

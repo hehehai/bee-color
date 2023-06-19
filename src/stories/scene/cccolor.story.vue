@@ -1,11 +1,9 @@
 <script lang="ts" setup>
 import ColorPickerVue from '@/components/ColorPicker.vue'
-
-// https://fffuel.co/cccolor/
 </script>
 
 <template>
-  <Story title="颜色选择器">
+  <Story title="cccolor" icon="heroicons:wrench-screwdriver">
     <Variant title="Slider">
       <div class="box">
         <ColorPickerVue />
@@ -21,3 +19,10 @@ import ColorPickerVue from '@/components/ColorPicker.vue'
   justify-content: center;
 }
 </style>
+
+<docs lang="md">
+# cccolor
+> https://fffuel.co/cccolor/
+
+🙃 soon
+</docs>

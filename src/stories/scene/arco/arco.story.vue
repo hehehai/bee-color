@@ -58,7 +58,7 @@ const presets: PresetsItem[] = [
 </script>
 
 <template>
-  <Story title="Arco">
+  <Story title="Arco" icon="heroicons:sparkles-solid">
     <Variant title="Slider">
       <div class="box">
         <Trigger

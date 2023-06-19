@@ -30,7 +30,7 @@ watch(colorValue, changeAlphaColor, {
 </script>
 
 <template>
-  <Story title="滑块选择">
+  <Story title="滑块选择" icon="heroicons:cube-20-solid">
     <Variant title="色相 + 透明度">
       <div class="box">
         <div class="row">

@@ -58,7 +58,7 @@ const presets: PresetsItem[] = [
 </script>
 
 <template>
-  <Story title="Element plus">
+  <Story title="Element plus" icon="heroicons:sparkles-solid">
     <Variant title="Slider">
       <div class="box">
         <ElPopover trigger="click" popper-class="my-color-picker-pop" :show-arrow="false">

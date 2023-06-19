@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import ColorPickerVue from '@/components/ColorPicker.vue'
-// https://coolors.co/9da594
 </script>
 
 <template>
-  <Story title="颜色选择器">
+  <Story title="coolors" icon="heroicons:wrench-screwdriver">
     <Variant title="Slider">
       <div class="box">
         <ColorPickerVue />
@@ -20,3 +19,10 @@ import ColorPickerVue from '@/components/ColorPicker.vue'
   justify-content: center;
 }
 </style>
+
+<docs lang="md">
+# coolors
+> // https://coolors.co/9da594
+
+🙃 soon
+</docs>

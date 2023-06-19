@@ -3,7 +3,7 @@ import ColorPickerVue from '@/components/ColorPicker.vue'
 </script>
 
 <template>
-  <Story title="颜色选择器">
+  <Story title="react-colorful" icon="heroicons:wrench-screwdriver">
     <Variant title="Slider">
       <div class="box">
         <ColorPickerVue />
@@ -19,3 +19,10 @@ import ColorPickerVue from '@/components/ColorPicker.vue'
   justify-content: center;
 }
 </style>
+
+<docs lang="md">
+# react-colorful
+> https://github.com/omgovich/react-colorful
+
+🙃 soon
+</docs>

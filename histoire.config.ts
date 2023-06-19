@@ -10,14 +10,14 @@ export default defineConfig({
         id: 'top',
         title: '' // No toggle
       },
-      {
-        title: '工具',
-        include: (file) => /\/utils\//.test(file.path)
-      },
-      {
-        title: 'Hooks',
-        include: (file) => /\/hooks\//.test(file.path)
-      },
+      // {
+      //   title: '工具',
+      //   include: (file) => /\/utils\//.test(file.path)
+      // },
+      // {
+      //   title: 'Hooks',
+      //   include: (file) => /\/hooks\//.test(file.path)
+      // },
       {
         title: '组件',
         include: (file) => /\/components\//.test(file.path)

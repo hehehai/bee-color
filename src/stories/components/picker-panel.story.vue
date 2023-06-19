@@ -5,6 +5,7 @@ import ColorPicker from '@/components/ColorPicker.vue'
 <template>
   <Story
     title="颜色选择器面板"
+    icon="heroicons:cube-20-solid"
   >
     <Variant title="Slider">
       <div class="box">
