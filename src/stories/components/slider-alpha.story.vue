@@ -32,7 +32,7 @@ watch(colorValue, changeAlphaColor, {
 <template>
   <Story title="滑块选择" icon="heroicons:cube-20-solid">
     <Variant title="色相 + 透明度">
-      <div class="box">
+      <div class="box-2">
         <div class="row">
           <Slider
             :model-value="colorValue"
@@ -58,7 +58,7 @@ watch(colorValue, changeAlphaColor, {
 </template>
 
 <style>
-.box {
+.box-2 {
   padding: 40px;
 }
 
