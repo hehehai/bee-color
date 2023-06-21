@@ -37,11 +37,3 @@ export type TransformOffset = {
   x: number,
   y: number
 };
-
-export interface BaseColorPickerProps {
-  color?: Color,
-  prefixCls?: string,
-  disabled?: boolean,
-  onChange?: (color: Color, type?: HsbaColorType) => void,
-  onChangeComplete?: (type?: HsbaColorType) => void
-}
