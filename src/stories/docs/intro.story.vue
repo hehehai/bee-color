@@ -11,7 +11,11 @@
 
 一个 vue3 颜色选择器组件
 
-![bee-color](https://user-images.githubusercontent.com/12692552/245743508-497e44be-b0d3-4a0d-91e9-b6235d88573a.png)
+<div align="center">
+  <a href="https://github.com/hehehai/bee-color">
+    <img src="https://user-images.githubusercontent.com/12692552/245743508-497e44be-b0d3-4a0d-91e9-b6235d88573a.png" width="320" alt="bee-color" />
+  </a>
+</div>
 
 ---
 
