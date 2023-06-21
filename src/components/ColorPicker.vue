@@ -23,6 +23,8 @@ interface ColorPickerProps {
   disabledAlpha?: boolean,
   // 是否在 X 轴内部
   insideX?: boolean,
+  // 透明背景
+  ghost?: boolean,
   // 子组件的 props
   childProps?: {
     saturation?: unknown,
@@ -35,7 +37,8 @@ const props = withDefaults(defineProps<ColorPickerProps>(), {
   modelValue: undefined,
   defaultValue: undefined,
   disabled: false,
-  disabledAlpha: false
+  disabledAlpha: false,
+  ghost: false
 })
 
 const emit = defineEmits<{
@@ -72,6 +75,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
   <div
     :class="[
       `${prefixCls}-panel`,
+      { [`${prefixCls}-panel-card`]: !ghost },
       { [`${prefixCls}-panel-disabled`]: disabled },
     ]"
   >

@@ -7,9 +7,14 @@ import ColorPicker from '@/components/ColorPicker.vue'
     title="颜色选择器面板"
     icon="heroicons:cube-20-solid"
   >
-    <Variant title="Slider">
+    <Variant title="普通">
       <div class="box">
         <ColorPicker />
+      </div>
+    </Variant>
+    <Variant title="幽灵">
+      <div class="box">
+        <ColorPicker ghost />
       </div>
     </Variant>
   </story>

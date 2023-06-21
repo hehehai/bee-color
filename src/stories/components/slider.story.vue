@@ -31,11 +31,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
     </Variant>
     <Variant title="自定义样式">
       <div class="box">
-        <Slider
-          v-model="colorValue"
-          class="custom"
-          :handler-color="`hsl(${colorValue.toHsb().h},100%,50%)`"
-        />
+        <Slider v-model="colorValue" class="custom" :handler-color="`hsl(${colorValue.toHsb().h},100%,50%)`" />
       </div>
     </Variant>
     <Variant title="内部">
@@ -77,10 +73,10 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
   --bee-color-handler-radius: 50%;
 
   --bee-color-slider-height: 20px;
+}
 
-  .inside-handler {
-    margin-left: 2px;
-    margin-right: 2px;
-  }
+.inside .inside-handler {
+  margin-left: 2px;
+  margin-right: 2px;
 }
 </style>
