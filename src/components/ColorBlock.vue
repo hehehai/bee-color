@@ -20,6 +20,9 @@ const blockStyle = computed(() => ({
 
 <template>
   <div :class="`${prefixCls}-color-block`">
-    <div :class="`${prefixCls}-color-block-inner`" :style="blockStyle"></div>
+    <slot name="default" v-bind="{ color }">
+      <div :class="`${prefixCls}-color-block-inner`" :style="blockStyle">
+      </div>
+    </slot>
   </div>
 </template>

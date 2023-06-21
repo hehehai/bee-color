@@ -106,7 +106,7 @@ export function useColorDrag(props: useColorDragProps) {
       y: direction === 'x' ? offsetValue.value.y : offsetY
     }
 
-    // 排除边界情况
+    // Exclusion of boundary conditions
     // targetWidth !== targetHeight
     if (
       (targetWidth === 0 && targetHeight === 0)

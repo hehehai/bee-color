@@ -23,12 +23,23 @@ const prefixCls = ColorPickerPrefixCls
 interface SliderProps {
   modelValue?: Color,
   defaultValue?: Color,
+  // 是否禁用
   disabled?: boolean,
+  // 渐变色数组
   gradientColors?: string[],
+  // 滑块的方向
   direction?: string,
+  // 滑块的类型
   type?: SliderHsbaColorType,
+  // 滑块的颜色
   handlerColor?: string,
-  insideX?: boolean
+  // 是否在 X 轴内部
+  insideX?: boolean,
+  // 子组件的 props
+  childProps?: {
+    handler?: unknown,
+    gradient?: unknown
+  }
 }
 
 const props = withDefaults(defineProps<SliderProps>(), {
@@ -48,7 +59,7 @@ const emit = defineEmits<{
   (e: 'changeComplete', color: Color, type: SliderHsbaColorType): void
 }>()
 
-const { modelValue, defaultValue, type, disabled, insideX } = toRefs(props)
+const { modelValue, defaultValue, type, disabled, insideX, childProps } = toRefs(props)
 
 const [colorValue, setColorValue] = useColorState(defaultColor, {
   defaultValue,
@@ -119,9 +130,25 @@ const [offset, onDragStartHandle] = useColorDrag(dragProps)
   >
     <Palette>
       <Transform ref="transformRef" :offset="offset">
-        <Handler :color="handlerColor ?? colorValue.toRgbString()" size="small" />
+        <slot
+          name="handler"
+          v-bind="{
+            color: handlerColor ?? colorValue.toRgbString(),
+          }"
+        >
+          <Handler
+            :color="handlerColor ?? colorValue.toRgbString()"
+            size="small"
+            v-bind="childProps?.handler"
+          />
+        </slot>
       </Transform>
-      <Gradient :colors="gradientColors" :direction="direction" :type="type" />
+      <Gradient
+        :colors="gradientColors"
+        :direction="direction"
+        :type="type"
+        v-bind="childProps?.gradient"
+      />
     </Palette>
   </div>
 </template>

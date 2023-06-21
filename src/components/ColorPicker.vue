@@ -17,8 +17,18 @@ const prefixCls = ColorPickerPrefixCls
 interface ColorPickerProps {
   modelValue?: Color,
   defaultValue?: Color,
+  // 是否禁用
   disabled?: boolean,
-  disabledAlpha?: boolean
+  // 是否禁用透明度
+  disabledAlpha?: boolean,
+  // 是否在 X 轴内部
+  insideX?: boolean,
+  // 子组件的 props
+  childProps?: {
+    saturation?: unknown,
+    hue?: unknown,
+    alpha?: unknown
+  }
 }
 
 const props = withDefaults(defineProps<ColorPickerProps>(), {
@@ -68,6 +78,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
     <Picker
       :model-value="colorValue"
       :disabled="disabled"
+      v-bind="childProps?.saturation"
       @change="handleChange"
       @change-complete="handleChangeComplete"
     />
@@ -82,6 +93,8 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
           :model-value="colorValue"
           :handler-color="`hsl(${colorValue.toHsb().h},100%, 50%)`"
           :disabled="disabled"
+          :inside-x="insideX"
+          v-bind="childProps?.hue"
           @change="handleChange"
           @change-complete="handleChangeComplete"
         />
@@ -92,12 +105,19 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
           :model-value="colorValue"
           :handler-color="colorValue.toRgbString()"
           :disabled="disabled"
+          :inside-x="insideX"
+          v-bind="childProps?.alpha"
           @change="handleChange"
           @change-complete="handleChangeComplete"
         />
       </div>
       <ColorBlock :color="colorValue.toRgbString()" />
     </div>
-    <slot></slot>
+    <slot
+      name="default"
+      v-bind="{
+        color: colorValue
+      }"
+    ></slot>
   </div>
 </template>

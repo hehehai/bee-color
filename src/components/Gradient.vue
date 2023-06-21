@@ -12,6 +12,7 @@ const prefixCls = ColorPickerPrefixCls
 interface GradientProps {
   colors?: string[],
   direction?: string,
+  // 渐变类型
   type?: HsbaColorType
 }
 

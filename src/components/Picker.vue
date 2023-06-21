@@ -20,7 +20,14 @@ const prefixCls = ColorPickerPrefixCls
 interface PickerProps {
   modelValue?: Color,
   defaultValue?: Color,
-  disabled?: boolean
+  // 是否禁用
+  disabled?: boolean,
+  // 滑块的颜色
+  handlerColor?: string,
+  // 子组件的 props
+  childProps?: {
+    handler?: unknown
+  }
 }
 
 const props = withDefaults(defineProps<PickerProps>(), {
@@ -98,7 +105,17 @@ const [offset, onDragStartHandle] = useColorDrag({
   >
     <Palette>
       <Transform ref="transformRef" :offset="offset">
-        <Handler color="transparent" />
+        <slot
+          name="handler"
+          v-bind="{
+            color: handlerColor ?? colorValue.toRgbString() ?? 'transparent',
+          }"
+        >
+          <Handler
+            :color="handlerColor ?? 'transparent'"
+            v-bind="childProps?.handler"
+          />
+        </slot>
       </Transform>
       <div
         :class="`${prefixCls}-saturation`"

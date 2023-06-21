@@ -42,7 +42,13 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
       <div class="box">
         <Slider
           v-model="colorValue"
+          class="inside"
           :inside-x="true"
+          :child-props="{
+            handler: {
+              class: 'inside-handler'
+            }
+          }"
           :handler-color="`hsl(${colorValue.toHsb().h},100%,50%)`"
         />
       </div>
@@ -63,5 +69,18 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
   --bee-color-handler-radius: 6px;
 
   --bee-color-slider-height: 20px;
+}
+
+.inside {
+  --bee-color-handler-width-small-size: 16px;
+  --bee-color-handler-height-small-size: 16px;
+  --bee-color-handler-radius: 50%;
+
+  --bee-color-slider-height: 20px;
+
+  .inside-handler {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
 }
 </style>
