@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useModelState } from '@/hooks/useModelState'
-import { InputNumber } from '@arco-design/web-vue'
-import { toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
+import type { ChangeEvent } from './interface'
 
 interface StepperProps {
   modelValue?: number,
@@ -29,7 +29,13 @@ const [_value, setValue] = useModelState(undefined, {
   modelValue
 })
 
-const handleChange = (step?: number) => {
+const intValue = computed(() => {
+  if (_value.value === undefined) return undefined
+  return Number.parseInt(_value.value.toString())
+})
+
+const handleChange = (e: Event) => {
+  const step = (e as ChangeEvent<number>).target.value
   if (step !== undefined) {
     setValue(step)
     emit('update:modelValue', step)
@@ -40,13 +46,13 @@ const handleChange = (step?: number) => {
 </script>
 
 <template>
-  <InputNumber
+  <input
     class="my-color-steppers"
+    type="number"
     v-bind="$attrs"
-    :model-value="_value"
-    size="mini"
+    :value="intValue"
     :min="min"
     :max="max"
-    @change="handleChange"
+    @input="handleChange"
   />
 </template>

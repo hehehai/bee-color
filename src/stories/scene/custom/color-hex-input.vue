@@ -2,7 +2,7 @@
 import type { Color } from '@/utils/color'
 import { generateColor, isHexString, toHexFormat } from '@/utils/color'
 import { ref, toRefs, watch } from 'vue'
-import { Input } from '@arco-design/web-vue'
+import type { ChangeEvent } from './interface'
 
 interface HexInputProps {
   modelValue?: Color
@@ -30,7 +30,8 @@ watch(modelValue, (val) => {
   immediate: true
 })
 
-const handleHexChange = (originValue: string) => {
+const handleHexChange = (e: Event) => {
+  const originValue = (e as ChangeEvent).target.value
   hexValue.value = toHexFormat(originValue)
   const hex = toHexFormat(originValue, true)
   if (isHexString(hex)) {
@@ -42,14 +43,10 @@ const handleHexChange = (originValue: string) => {
 </script>
 
 <template>
-  <Input
+  <input
+    type="text"
     class="my-color-hex-input"
-    size="small"
-    :model-value="hexValue?.toUpperCase()"
-    @change="handleHexChange"
-  >
-    <template #prefix>
-      <span>#</span>
-    </template>
-  </Input>
+    :value="hexValue?.toUpperCase()"
+    @input="handleHexChange"
+  />
 </template>

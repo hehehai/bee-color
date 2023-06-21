@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Select } from '@arco-design/web-vue'
 import { ColorFormat, colorSelectOptions } from './constants'
 import type { Color } from '@/utils/color'
 import { defaultColor } from '@/utils/color'
@@ -10,6 +9,7 @@ import ColorHexInput from './color-hex-input.vue'
 import ColorRgbInput from './color-rgb-input.vue'
 import ColorHsbInput from './color-hsb-input.vue'
 import { useModelState } from '@/hooks/useModelState'
+import type { ChangeEvent } from './interface'
 
 interface SliderProps {
   modelValue?: Color,
@@ -53,7 +53,8 @@ const formatInput = computed(() => {
   }
 })
 
-const handleFormatChange = (val: any) => {
+const handleFormatChange = (e: Event) => {
+  const val = (e as ChangeEvent<ColorFormat>).target.value ?? ColorFormat.hex
   setFormat(val)
   emit('update:format', val)
 }
@@ -68,17 +69,13 @@ const handleColorChange = (color?: Color) => {
 
 <template>
   <div class="my-color-container">
-    <Select
-      class="my-color-select"
-      :model-value="_format"
-      size="small"
-      :bordered="false"
-      :trigger-props="{
-        contentClass: 'my-color-select-pop'
-      }"
-      :options="colorSelectOptions"
-      @change="handleFormatChange"
-    />
+    <select class="my-color-select" :value="_format" @input="handleFormatChange">
+      <template v-for="item in colorSelectOptions" :key="item.value">
+        <option :value="item.value">
+          {{ item.label }}
+        </option>
+      </template>
+    </select>
     <div class="my-color-input">
       <component :is="formatInput" :model-value="colorValue" @change="handleColorChange" />
     </div>
@@ -87,52 +84,36 @@ const handleColorChange = (color?: Color) => {
 </template>
 
 <style lang="less">
-// a 为自定义样式，arc 为覆盖样式
 .my-color-container {
   --input-font-size: 13px;
-  --input-line-height: 1.7;
+  --input-height: 22px;
   --input-border-radius: 4px;
 
   display: flex;
 
   // 数值计步器
-  .my-color-steppers.arco-input-wrapper {
+  .my-color-steppers {
     border-radius: var(--input-border-radius);
     padding-left: 6px;
     padding-right: 6px;
-
-    .arco-input.arco-input-size-mini {
-      font-size: var(--input-font-size);
-      line-height: var(--input-line-height);
-    }
-
-    .arco-input-suffix {
-      padding-left: 0;
-    }
+    border: 1px solid #e7e7e7;
+    padding: 0 0 0 5px;
+    height: var(--input-height);
+    line-height: var(--input-height);
   }
 }
 
 // 颜色格式选择器
 .my-color-select {
+  border: none;
+  background: transparent;
+  cursor: pointer;
   margin-inline-end: 8px;
   width: auto;
-
-  &.arco-select-view-single {
-    padding-left: 0;
-    padding-right: 0;
-
-    .arco-select-view-suffix {
-      padding-left: 10px;
-    }
-  }
 }
 
 .my-color-select-pop {
   min-width: 60px;
-
-  .arco-select-dropdown .arco-select-option {
-    line-height: 30px;
-  }
 }
 
 // 颜色输入
@@ -147,27 +128,29 @@ const handleColorChange = (color?: Color) => {
     display: flex;
     gap: 4px;
     align-items: center;
+
+    .my-color-steppers {
+      width: calc(100% / 3);
+    }
   }
 
   .my-color-steppers {
     flex: 1;
   }
 
-  .my-color-hex-input.arco-input-wrapper {
+  .my-color-hex-input {
+    border: 1px solid #e7e7e7;
+    padding: 0px 5px;
+    height: var(--input-height);
+    line-height: var(--input-height);
     border-radius: var(--input-border-radius);
-
-    .arco-input.arco-input-size-small {
-      font-size: var(--input-font-size);
-      line-height: var(--input-line-height);
-      padding-top: 1px;
-      padding-bottom: 1px;
-    }
+    width: -webkit-fill-available;
   }
 }
 
 // 透明度输入
 .my-color-alpha-input {
-  flex: 0 0 55px;
+  flex: 0 0 40px;
   margin-inline-start: 4px;
 }
 </style>

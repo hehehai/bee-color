@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { type Color, Color as RcColor, generateColor, defaultColor } from '@/utils/color'
 import type { PresetsItem } from './interface'
-import { computed, ref, toRefs } from 'vue'
-import { Collapse, CollapseItem } from '@arco-design/web-vue'
+import { computed, toRefs } from 'vue'
 import { ColorBlock } from '@/components'
 import { useColorState } from '@/hooks/useColorState'
 
@@ -52,8 +51,6 @@ const [colorValue, setColorValue] = useColorState(defaultColor, {
 
 const presets = computed(() => genPresetColor(props.presets))
 
-const activePresetKeys = ref(presets.value.map((item) => `panel-${item.label}`))
-
 const handlePresetChange = (color: Color) => {
   setColorValue(color)
   emit('update:modelValue', color)
@@ -64,13 +61,13 @@ const handlePresetChange = (color: Color) => {
 
 <template>
   <div class="my-color-presets">
-    <Collapse v-model:active-key="activePresetKeys" :bordered="false">
-      <CollapseItem v-for="preset in presets" :key="`panel-${preset.label}`">
-        <template #header>
+    <template v-for="preset in presets" :key="`panel-${preset.label}`">
+      <details class="my-color-presets-details">
+        <summary class="my-color-presets-header">
           <div class="my-color-presets-label">
             {{ preset.label }}
           </div>
-        </template>
+        </summary>
         <div v-if="preset.colors?.length" class="my-color-presets-items">
           <template v-for="colorItem in preset.colors" :key="`preset-${colorItem.toRgbString()}`">
             <ColorBlock
@@ -85,42 +82,29 @@ const handlePresetChange = (color: Color) => {
           </template>
         </div>
         <span v-else class="my-color-presets-empty">{{ emptyText }}</span>
-      </CollapseItem>
-    </Collapse>
+      </details>
+    </template>
   </div>
 </template>
 
 <style lang="less">
 .my-color-presets {
-  .arco-collapse-item-header {
-    padding-top: 2px;
-    padding-bottom: 2px;
+  &-details + &-details {
+    margin-top: 8px;
   }
 
-  .arco-collapse-item-header-left {
-    padding-right: 12px;
-    padding-left: 22px;
-    border-color: transparent;
-  }
-
-  .arco-collapse-item {
-    border-bottom: none;
-
-    .arco-collapse-item-icon-hover {
-      left: 0px;
-    }
-  }
-
-  .arco-collapse-item-content {
-    padding-left: 2px;
-    padding-right: 2px;
-    background: transparent;
+  &-header {
+    cursor: pointer;
+    padding-bottom: 8px;
   }
 
   &-label {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 2px;
     font-size: 12px;
     color: rgba(0, 0, 0, 0.88);
-    line-height: 1.7;
+    line-height: 19px;
   }
 
   &-items {

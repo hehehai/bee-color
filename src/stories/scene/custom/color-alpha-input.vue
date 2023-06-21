@@ -42,8 +42,6 @@ const handleAlphaChange = (step: number) => {
     class="my-color-alpha-input"
     :min="0"
     :max="255"
-    :formatter="(step: number) => `${step}%`"
-    :parser="(value: string) => value.replace(/%/g, '')"
     :model-value="getAlphaColor(alphaValue)"
     @change="handleAlphaChange"
   />

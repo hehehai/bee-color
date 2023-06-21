@@ -167,12 +167,6 @@ export const calculateOffset = (options: {
     ? (height - targetHeight) / 2
     : (targetHeight - height) / -2
 
-  console.log({
-    height,
-    targetHeight,
-    insideY
-  })
-
   if (type) {
     switch (type) {
       case 'hue':

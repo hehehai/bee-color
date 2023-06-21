@@ -1,5 +1,6 @@
+import type { MaybeRef } from './../utils/vue-utils'
 import type { Ref } from 'vue'
-import { onBeforeUnmount, ref, watch } from 'vue'
+import { unref, onBeforeUnmount, ref, watch } from 'vue'
 import type { Color } from '@/utils/color'
 import { type MaybeElementRef, unrefElement } from '@/utils/vue-utils'
 import type { TransformOffset } from '@/interface'
@@ -20,7 +21,7 @@ export interface useColorDragProps {
   calculate?: (containerRef: HTMLElement) => TransformOffset | undefined, // 计算偏移量的函数
   /** Disabled drag */
   disabledDrag?: Ref<boolean>, // 是否禁用拖拽
-  insideX?: Ref<boolean> // 是否内部 - 仅限制 x 轴
+  insideX?: MaybeRef<boolean> // 是否内部 - 仅限制 x 轴
 }
 
 function getPosition(e: EventType) {
@@ -47,7 +48,7 @@ export function useColorDrag(props: useColorDragProps) {
     calculate,
     color,
     disabledDrag,
-    insideX
+    insideX = ref(false)
   } = props
   const offsetValue = ref<TransformOffset>(offset?.value ?? { x: 0, y: 0 }) // 偏移量的值
   const setOffsetValue = (val: TransformOffset) => {
@@ -96,7 +97,7 @@ export function useColorDrag(props: useColorDragProps) {
     const centerOffsetX = targetWidth / 2
     const centerOffsetY = targetHeight / 2
 
-    const sideWidth = insideX?.value ? centerOffsetX : 0
+    const sideWidth = unref(insideX) ? centerOffsetX : 0
 
     const offsetX = Math.max(sideWidth, Math.min(pageX - rectX, width - sideWidth)) - centerOffsetX
     const offsetY = Math.max(0, Math.min(pageY - rectY, height)) - centerOffsetY

@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { Trigger, Divider } from '@arco-design/web-vue'
-
-import '@arco-design/web-vue/dist/arco.css'
 import { ref } from 'vue'
 import type { PresetsItem } from './interface'
 import { ColorBlock, ColorPicker } from '@/components'
@@ -61,23 +58,16 @@ const presets: PresetsItem[] = [
   <Story title="自定义" icon="heroicons:sparkles-solid">
     <Variant title="Slider">
       <div class="box">
-        <Trigger
-          trigger="click"
-          :popup-translate="[0, 8]"
-        >
-          <template #content>
-            <ColorPicker v-model="color" class="my-color-picker">
-              <ColorInput v-model="color" />
-              <template v-if="presets">
-                <Divider class="my-color-divider" />
-                <ColorPresets v-model="color" :presets="presets" />
-              </template>
-            </ColorPicker>
+        <div class="my-color-block-trigger">
+          <ColorBlock :color="color.toRgbString()" />
+        </div>
+        <ColorPicker v-model="color" class="my-color-picker">
+          <ColorInput v-model="color" />
+          <template v-if="presets">
+            <div class="my-color-divider"></div>
+            <ColorPresets v-model="color" :presets="presets" />
           </template>
-          <div class="my-color-block-trigger">
-            <ColorBlock :color="color.toRgbString()" />
-          </div>
-        </Trigger>
+        </ColorPicker>
       </div>
     </Variant>
   </story>
@@ -108,6 +98,8 @@ const presets: PresetsItem[] = [
   transition: all 0.2s;
   background: #ffffff;
 
+  margin-right: 2em;
+
   &:hover {
     // ant design primary color
     border-color: #3876F6;
@@ -118,5 +110,11 @@ const presets: PresetsItem[] = [
   --bee-color-panel-width: 280px;
 
   box-sizing: border-box;
+}
+
+.my-color-divider {
+  height: 1px;
+  background: #e7e7e7;
+  margin: 12px 0;
 }
 </style>
