@@ -27,7 +27,8 @@ interface SliderProps {
   gradientColors?: string[],
   direction?: string,
   type?: SliderHsbaColorType,
-  handlerColor?: string
+  handlerColor?: string,
+  insideX?: boolean
 }
 
 const props = withDefaults(defineProps<SliderProps>(), {
@@ -37,7 +38,8 @@ const props = withDefaults(defineProps<SliderProps>(), {
   gradientColors: undefined,
   direction: undefined,
   type: 'hue',
-  handlerColor: undefined
+  handlerColor: undefined,
+  insideX: false
 })
 
 const emit = defineEmits<{
@@ -46,15 +48,15 @@ const emit = defineEmits<{
   (e: 'changeComplete', color: Color, type: SliderHsbaColorType): void
 }>()
 
-const { modelValue, defaultValue, type, disabled } = toRefs(props)
+const { modelValue, defaultValue, type, disabled, insideX } = toRefs(props)
 
 const [colorValue, setColorValue] = useColorState(defaultColor, {
   defaultValue,
   modelValue
 })
 
-const sliderRef = ref<HTMLDivElement | null>(null)
-const transformRef = ref<HTMLDivElement | null>(null)
+const sliderRef = ref(null)
+const transformRef = ref(null)
 
 const handleChange = (color: Color, type: SliderHsbaColorType) => {
   setColorValue(color)
@@ -71,12 +73,13 @@ const dragProps: useColorDragProps = {
     if (!containerEl || !transformEl) {
       return undefined
     }
-    return calculateOffset(
+    return calculateOffset({
       containerEl,
-      transformEl,
-      colorValue.value,
-      type.value
-    )
+      targetEl: transformEl,
+      color: colorValue.value,
+      type: type.value,
+      insideX: insideX.value
+    })
   },
   onDragChange: (offsetValue) => {
     const transformEl = unrefElement(transformRef)
@@ -90,7 +93,8 @@ const dragProps: useColorDragProps = {
         targetEl: transformEl,
         containerEl: sliderEl,
         color: colorValue.value,
-        type: type.value
+        type: type.value,
+        insideX: insideX.value
       }),
       type.value
     )
@@ -99,7 +103,8 @@ const dragProps: useColorDragProps = {
     emit('changeComplete', colorValue.value, type.value)
   },
   direction: 'x',
-  disabledDrag: disabled
+  disabledDrag: disabled,
+  insideX
 }
 
 const [offset, onDragStartHandle] = useColorDrag(dragProps)
@@ -114,10 +119,7 @@ const [offset, onDragStartHandle] = useColorDrag(dragProps)
   >
     <Palette>
       <Transform ref="transformRef" :offset="offset">
-        <Handler
-          :color="handlerColor ?? colorValue.toRgbString()"
-          size="small"
-        />
+        <Handler :color="handlerColor ?? colorValue.toRgbString()" size="small" />
       </Transform>
       <Gradient :colors="gradientColors" :direction="direction" :type="type" />
     </Palette>

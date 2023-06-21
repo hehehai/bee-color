@@ -4,7 +4,7 @@ import { unref } from 'vue'
 export type MaybeRef<T> = T | Ref<T>;
 export type VueInstance = ComponentPublicInstance;
 export type MaybeElement =
-  | HTMLDivElement
+  | HTMLElement
   | VueInstance
   | undefined
   | null;

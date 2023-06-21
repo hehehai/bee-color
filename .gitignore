@@ -82,6 +82,7 @@ dist
 
 # IDE
 .idea
+.vscode
 *.d.ts
 
 .histoire

@@ -92,24 +92,28 @@ export const defaultHueColors = [
 
 export const defaultAlphaStartColor = 'rgba(255, 0, 4, 0) 0%'
 
-export const calculateColor = (props: {
+export const calculateColor = (options: {
   offset: TransformOffset,
-  containerEl: HTMLDivElement,
-  targetEl: HTMLDivElement,
+  containerEl: HTMLElement,
+  targetEl: HTMLElement,
   color: Color,
-  type?: HsbaColorType
+  type?: HsbaColorType,
+  insideX?: boolean
 }): Color => {
-  const { offset, targetEl, containerEl, color, type } = props
+  const { offset, targetEl, containerEl, color, type, insideX } = options
   const { width, height } = containerEl.getBoundingClientRect()
   const { width: targetWidth, height: targetHeight } =
     targetEl.getBoundingClientRect()
   const centerOffsetX = targetWidth / 2
   const centerOffsetY = targetHeight / 2
-  const saturation = (offset.x + centerOffsetX) / width
+
+  const sideWidth = insideX ? targetWidth : centerOffsetX
+
+  const saturation = (offset.x + sideWidth) / width
   const bright = 1 - (offset.y + centerOffsetY) / height
   const hsb = color.toHsb()
   const alphaOffset = saturation
-  const hueOffset = ((offset.x + centerOffsetX) / width) * 360
+  const hueOffset = ((offset.x + sideWidth) / width) * 360
 
   if (type) {
     switch (type) {
@@ -134,12 +138,14 @@ export const calculateColor = (props: {
   })
 }
 
-export const calculateOffset = (
-  containerEl: HTMLDivElement,
-  targetEl: HTMLDivElement,
+export const calculateOffset = (options: {
+  containerEl: HTMLElement,
+  targetEl: HTMLElement,
   color: Color,
-  type?: HsbaColorType
-): TransformOffset | undefined => {
+  type?: HsbaColorType,
+  insideX?: boolean
+}): TransformOffset | undefined => {
+  const { containerEl, targetEl, color, type, insideX } = options
   const { width, height } = containerEl.getBoundingClientRect()
   const { width: targetWidth, height: targetHeight } =
     targetEl.getBoundingClientRect()
@@ -155,23 +161,25 @@ export const calculateOffset = (
     return
   }
 
+  const sideWidth = insideX ? targetWidth : centerOffsetX
+
   if (type) {
     switch (type) {
       case 'hue':
         return {
-          x: (hsb.h / 360) * width - centerOffsetX,
+          x: (hsb.h / 360) * width - sideWidth,
           y: -centerOffsetY / 3
         }
       case 'alpha':
         return {
-          x: (hsb.a / 1) * width - centerOffsetX,
+          x: (hsb.a / 1) * width - sideWidth,
           y: -centerOffsetY / 3
         }
     }
   }
 
   return {
-    x: hsb.s * width - centerOffsetX,
+    x: hsb.s * width - sideWidth,
     y: (1 - hsb.b) * height - centerOffsetY
   }
 }

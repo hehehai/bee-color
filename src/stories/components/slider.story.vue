@@ -35,8 +35,15 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
           v-model="colorValue"
           class="custom"
           :handler-color="`hsl(${colorValue.toHsb().h},100%,50%)`"
-          @change="handleChange"
-          @change-complete="handleChangeComplete"
+        />
+      </div>
+    </Variant>
+    <Variant title="内部">
+      <div class="box">
+        <Slider
+          v-model="colorValue"
+          :inside-x="true"
+          :handler-color="`hsl(${colorValue.toHsb().h},100%,50%)`"
         />
       </div>
     </Variant>

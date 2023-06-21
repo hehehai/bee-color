@@ -42,8 +42,8 @@ const [colorValue, setColorValue] = useColorState(defaultColor, {
   modelValue
 })
 
-const pickerRef = ref<HTMLDivElement | null>(null)
-const transformRef = ref<HTMLDivElement | null>(null)
+const pickerRef = ref(null)
+const transformRef = ref(null)
 
 const handleChange = (color: Color) => {
   setColorValue(color)
@@ -60,7 +60,11 @@ const [offset, onDragStartHandle] = useColorDrag({
     if (!containerEl || !transformEl) {
       return
     }
-    return calculateOffset(containerEl, transformEl, colorValue.value)
+    return calculateOffset({
+      containerEl,
+      targetEl: transformEl,
+      color: colorValue.value
+    })
   },
   onDragChange: (offsetValue) => {
     const transformEl = unrefElement(transformRef)

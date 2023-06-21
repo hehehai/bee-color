@@ -17,9 +17,10 @@ export interface useColorDragProps {
   direction?: 'x' | 'y', // 方向
   onDragChange?: (offset: TransformOffset) => void, // 拖拽时的回调函数
   onDragChangeComplete?: () => void, // 拖拽结束时的回调函数
-  calculate?: (containerRef: HTMLDivElement) => TransformOffset | undefined, // 计算偏移量的函数
+  calculate?: (containerRef: HTMLElement) => TransformOffset | undefined, // 计算偏移量的函数
   /** Disabled drag */
-  disabledDrag?: Ref<boolean> // 是否禁用拖拽
+  disabledDrag?: Ref<boolean>, // 是否禁用拖拽
+  insideX?: Ref<boolean> // 是否内部 - 仅限制 x 轴
 }
 
 function getPosition(e: EventType) {
@@ -45,7 +46,8 @@ export function useColorDrag(props: useColorDragProps) {
     onDragChangeComplete,
     calculate,
     color,
-    disabledDrag
+    disabledDrag,
+    insideX
   } = props
   const offsetValue = ref<TransformOffset>(offset?.value ?? { x: 0, y: 0 }) // 偏移量的值
   const setOffsetValue = (val: TransformOffset) => {
@@ -68,7 +70,7 @@ export function useColorDrag(props: useColorDragProps) {
   useResizeObserver([containerRef, targetRef], rectify)
 
   watch(
-    [containerRef, color],
+    [containerRef, color, insideX],
     rectify,
     {
       immediate: true
@@ -94,9 +96,10 @@ export function useColorDrag(props: useColorDragProps) {
     const centerOffsetX = targetWidth / 2
     const centerOffsetY = targetHeight / 2
 
-    const offsetX = Math.max(0, Math.min(pageX - rectX, width)) - centerOffsetX
-    const offsetY =
-      Math.max(0, Math.min(pageY - rectY, height)) - centerOffsetY
+    const sideWidth = insideX?.value ? centerOffsetX : 0
+
+    const offsetX = Math.max(sideWidth, Math.min(pageX - rectX, width - sideWidth)) - centerOffsetX
+    const offsetY = Math.max(0, Math.min(pageY - rectY, height)) - centerOffsetY
 
     const calcOffset = {
       x: offsetX,
