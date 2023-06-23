@@ -108,6 +108,11 @@ const handleColorChange = (color?: Color) => {
 
     .arco-input-suffix {
       padding-left: 0;
+      min-width: 0;
+
+      .arco-input-number-step {
+        width: 14px;
+      }
     }
   }
 }
@@ -122,7 +127,7 @@ const handleColorChange = (color?: Color) => {
     padding-right: 0;
 
     .arco-select-view-suffix {
-      padding-left: 10px;
+      padding-left: 6px;
     }
   }
 }
@@ -167,7 +172,7 @@ const handleColorChange = (color?: Color) => {
 
 // 透明度输入
 .my-color-alpha-input {
-  flex: 0 0 55px;
+  flex: 0 0 48px;
   margin-inline-start: 4px;
 }
 </style>

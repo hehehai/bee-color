@@ -119,4 +119,8 @@ const presets: PresetsItem[] = [
 
   box-sizing: border-box;
 }
+
+.my-color-divider {
+  margin: 18px 0 10px;
+}
 </style>

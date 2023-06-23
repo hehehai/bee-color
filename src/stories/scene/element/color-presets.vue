@@ -97,12 +97,13 @@ const handlePresetChange = (color: Color) => {
 <style lang="less">
 .my-color-presets {
   .el-collapse {
+    --el-collapse-header-height: 38px;
+
     border-top: none;
   }
 
-  .arco-collapse-item__header {
-    height: var(--el-collapse-header-height);
-    line-height: var(--el-collapse-header-height);
+  .el-collapse-item__header {
+    border-bottom: none;
   }
 
   .el-collapse-item__wrap {

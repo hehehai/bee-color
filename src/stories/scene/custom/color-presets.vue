@@ -62,7 +62,7 @@ const handlePresetChange = (color: Color) => {
 <template>
   <div class="my-color-presets">
     <template v-for="preset in presets" :key="`panel-${preset.label}`">
-      <details class="my-color-presets-details">
+      <details open class="my-color-presets-details">
         <summary class="my-color-presets-header">
           <div class="my-color-presets-label">
             {{ preset.label }}
