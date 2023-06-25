@@ -161,31 +161,27 @@ export const calculateOffset = (options: {
     return
   }
 
-  const sideWidth = insideX ? targetWidth : centerOffsetX
-
   const insideY = height >= targetHeight
     ? (height - targetHeight) / 2
     : (targetHeight - height) / -2
-
-  console.log('(hsb.h / 360) * width - sideWidth', (hsb.h / 360) * width - sideWidth)
 
   if (type) {
     switch (type) {
       case 'hue':
         return {
-          x: (hsb.h / 360) * width - sideWidth,
+          x: insideX ? (hsb.h / 360) * (width - targetWidth) : (hsb.h / 360) * width - centerOffsetX,
           y: insideY
         }
       case 'alpha':
         return {
-          x: (hsb.a / 1) * width - sideWidth,
+          x: insideX ? (hsb.a / 1) * (width - targetWidth) : (hsb.a / 1) * width - centerOffsetX,
           y: insideY
         }
     }
   }
 
   return {
-    x: hsb.s * width - sideWidth,
+    x: insideX ? hsb.s * (width - targetWidth) : hsb.s * width - centerOffsetX,
     y: (1 - hsb.b) * height - centerOffsetY
   }
 }
