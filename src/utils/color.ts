@@ -107,13 +107,13 @@ export const calculateColor = (options: {
   const centerOffsetX = targetWidth / 2
   const centerOffsetY = targetHeight / 2
 
-  const sideWidth = insideX ? targetWidth : centerOffsetX
+  const sideWidth = insideX ? offset.x / (width - targetWidth) : (offset.x + centerOffsetX) / width
 
-  const saturation = (offset.x + sideWidth) / width
+  const saturation = sideWidth
   const bright = 1 - (offset.y + centerOffsetY) / height
   const hsb = color.toHsb()
   const alphaOffset = saturation
-  const hueOffset = ((offset.x + sideWidth) / width) * 360
+  const hueOffset = sideWidth * 360
 
   if (type) {
     switch (type) {
@@ -166,6 +166,8 @@ export const calculateOffset = (options: {
   const insideY = height >= targetHeight
     ? (height - targetHeight) / 2
     : (targetHeight - height) / -2
+
+  console.log('(hsb.h / 360) * width - sideWidth', (hsb.h / 360) * width - sideWidth)
 
   if (type) {
     switch (type) {
