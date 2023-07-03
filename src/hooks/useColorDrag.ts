@@ -1,8 +1,8 @@
-import type { MaybeRef } from './../utils/vue-utils'
+import { type MaybeRef, type MaybeElementRef } from '@/utils/vue-utils'
+import { unrefElement } from '@/utils/vue-utils'
 import type { Ref } from 'vue'
 import { unref, onBeforeUnmount, ref, watch } from 'vue'
 import type { Color } from '@/utils/color'
-import { type MaybeElementRef, unrefElement } from '@/utils/vue-utils'
 import type { TransformOffset } from '@/interface'
 import { useResizeObserver } from './useResizeObserver'
 

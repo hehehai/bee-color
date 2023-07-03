@@ -48,6 +48,7 @@ const handleChangeComplete = (color: Color, type: HsbaColorType) => {
           :handler-color="`hsl(${colorValue.toHsb().h},100%,50%)`"
         />
       </div>
+      <div>{{ colorValue.toHsb().h }}</div>
     </Variant>
   </Story>
 </template>

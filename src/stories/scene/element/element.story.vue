@@ -117,8 +117,6 @@ const presets: PresetsItem[] = [
 
 .my-color-picker {
   --bee-color-panel-width: 280px;
-
-  box-sizing: border-box;
 }
 
 .my-color-divider {
